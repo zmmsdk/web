@@ -6,4 +6,17 @@ var user ={
                 callback(res);
         })
     },
+
+    logout: function () {
+        $.post('http://localhost:8000/admin/logout', function (res) {
+            console.log(res);
+            if (res.code === 200) {
+                // 退出回到登录页
+                location.href = './login.html';
+            }
+
+        })
+    }
 }
+
+
