@@ -1,31 +1,40 @@
+// import 自定义模块名称 from '模块标识符'
+// import user from 'user'
 //后台登录页面
     $('#btnLogin').click(function() {
         // 获取用户名和密码
-        var myName = $('#uname').val().trim()
-        var myPassword = $('#myPassword').val().trim()
+        var user_name = $('#uname').val().trim();
+        var password = $('#mypassword').val().trim();
         // console.log(myName, myPassword);
         
         // 判断是否为空
-        if(myName === '' || myPassword === ''){
-            // alert('不能为空');
-            $('#msgInfo').text('不能为空')
-            $('#myModal').modal('show')
-            return; 
+        if(user_name === "" ||password === ""){
+            alert('输入不能为空')
         }
+      
+     
         // 发请求，根据返回结果，提示用户
+     
         // $.post(地址，参数，回调)
-        // 语义化
-        user.login(myName, myPassword,function(res){
-            console.log(res);
-            if(res.code === 200){
-                // window.alert('登陆成功')
-                location.href= './index.html'
-            } else {
-                // alert(res.msg)
-                $('#msgInfo').text(res.msg)
-                $('#myModal').modal('show')
+        var user ={
+            login :function login(user_name,password){
+                $.post(`http://localhost:8000/admin/login`,{user_name,password},function(res){
+                    console.log(res);
+                    if(res.code === 400){
+                        alert('用户名或密码错误');
+                    }else if(res.code === 200){
+                        alert('登录成功');
+                        location.href = './index.html';
+                    } 
+                })
             }
-        })
+        }
+        
+        // login(user_name,password)
+        user.login(user_name,password)
+        // 语义化
+   
+       
     })
   
    
