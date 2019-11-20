@@ -217,3 +217,13 @@ $.get('http://localhost:8000/admin/article_category_count',function(res){
       oPie.setOption(oPieopt);
     }
 });
+
+// 月文章访问量
+$.get('http://localhost:8000/admin/article_category_visit',function(res){
+    console.log(res);
+    if(res.code === 200){
+        var data = res.data ;
+        console.log(data);
+        
+    }
+});

@@ -6,6 +6,10 @@ console.log($logout);
 var $userImg = $(".userImg");
 var $userName = $('#userName');
 
+// 获取搜索框信息
+var $ipt = $("#ipt");
+var $search = $('#search');
+console.log($ipt,$search);
 
 
 $logout.click(function () {
@@ -28,5 +32,23 @@ user.getUser(function (res) {
         $userName.text(res.data.nickname)
     }
 });
+
+// 文章搜索
+var key,type,state,page,perpage,id;
+$search.click(function () { 
+    var va = $ipt.val().trim();
+    console.log(va);
+
+    $.get('http://localhost:8000/admin/search',{key,type,state,page,perpage,id},function(res){
+    console.log(res);
+    if(res.code === 200){
+        var data = res.data ;
+        console.log(data);
+    }
+});
+    
+    
+});
+
 
 
