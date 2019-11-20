@@ -13,6 +13,16 @@ var user ={
            callback(res)
 
         })
+    },
+    // 获取用户信息
+    getUser: function () {
+        $.get('http://localhost:8000/admin/getuser', function (res) {
+            console.log(res);
+            if (res.code === 200) {
+                $(".userImg").prop('src', res.data.user_pic)
+                $('#userName').text(res.data.nickname)
+            }
+        })
     }
 }
 

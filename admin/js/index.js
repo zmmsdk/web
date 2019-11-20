@@ -17,3 +17,7 @@ $logout.click(function () {
 
 
 });
+
+// 获取用户信息
+// $.get('地址',参数,回调)
+user.getUser()
