@@ -16,26 +16,21 @@
         // 发请求，根据返回结果，提示用户
      
         // $.post(地址，参数，回调)
-        var user ={
-            login :function login(user_name,password){
-                $.post(`http://localhost:8000/admin/login`,{user_name,password},function(res){
-                    console.log(res);
-                    if(res.code === 400){
-                        alert('用户名或密码错误');
-                    }else if(res.code === 200){
-                        alert('登录成功');
-                        location.href = './index.html';
-                    } 
-                })
-            }
-        }
+ 
         
-        // login(user_name,password)
-        user.login(user_name,password)
+        
+        user.login(user_name,password,function(res){
+            console.log(res);
+            if(res.code === 400){
+                alert('用户名或密码错误');
+            }else if(res.code === 200){
+                alert('登录成功');
+                location.href = './index.html';
+        } 
+        })
         // 语义化
    
        
     })
   
-   
 
