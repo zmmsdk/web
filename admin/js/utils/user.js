@@ -1,5 +1,6 @@
 // user对象
-var post_url =   'http://localhost:8000/';
+let post_url =   'http://localhost:8000/';
+// import { post_url,user }  from 'config.js'
 var user ={
     // 登入
     login :function login(user_name,password,callback){
@@ -21,5 +22,6 @@ var user ={
         })
     }
 }
+console.log(a);
 
 
