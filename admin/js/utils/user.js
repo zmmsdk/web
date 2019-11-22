@@ -2,7 +2,7 @@
 var user ={
     // 登入
     login :function login(user_name,password,callback){
-        $.post(`${post_url}${last_url.admin_login}`,{user_name,password},function(res){
+        $.post(`${post_url}${last_url.admin_login}`,{user_name,password},function(res){9
                 callback(res);
         })
     },
