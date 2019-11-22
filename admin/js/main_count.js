@@ -1,13 +1,12 @@
 // 文章数量统计
-// 获取总文章数和日更新文章数
-var $all_count =$('#all_count');
-var $day_count = $('#day_count');
-// console.log($all_count,$day_count);
-// 获取评论数量
-var $c_all_count =$('#comment_all_count');
-var $c_day_count =$('#comment_day_count');
+
+
+
+var article = {
+     article_url : 'http://localhost:8000/',
+}
 // 文章数量统计
-$.get('http://localhost:8000/admin/article_count',function(res){
+$.get(`${article.article_url}admin/article_count`,function(res){
     console.log(res);
     if(res.code === 200){
         $all_count.text(res.data.all_count) ;
@@ -31,39 +30,7 @@ $.get('http://localhost:8000/admin/month_article_count',function(res){
         console.log(data);
         var oChart = echarts.init(document.getElementById('curve_show'));
         var aList_all = data;
-        // [
-        //   {'count':36,'date':'2019-04-13'},
-        //   {'count':52,'date':'2019-04-14'},
-        //   {'count':78,'date':'2019-04-15'},
-        //   {'count':85,'date':'2019-04-16'},
-        //   {'count':65,'date':'2019-04-17'},
-        //   {'count':72,'date':'2019-04-18'},
-        //   {'count':88,'date':'2019-04-19'},
-        //   {'count':64,'date':'2019-04-20'},
-        //   {'count':72,'date':'2019-04-21'},
-        //   {'count':90,'date':'2019-04-22'},
-        //   {'count':96,'date':'2019-04-23'},
-        //   {'count':100,'date':'2019-04-24'},
-        //   {'count':102,'date':'2019-04-25'},
-        //   {'count':110,'date':'2019-04-26'},
-        //   {'count':123,'date':'2019-04-27'},
-        //   {'count':100,'date':'2019-04-28'},
-        //   {'count':132,'date':'2019-04-29'},
-        //   {'count':146,'date':'2019-04-30'},
-        //   {'count':200,'date':'2019-05-01'},
-        //   {'count':180,'date':'2019-05-02'},
-        //   {'count':163,'date':'2019-05-03'},
-        //   {'count':110,'date':'2019-05-04'},
-        //   {'count':80,'date':'2019-05-05'},
-        //   {'count':82,'date':'2019-05-06'},
-        //   {'count':70,'date':'2019-05-07'},
-        //   {'count':65,'date':'2019-05-08'},
-        //   {'count':54,'date':'2019-05-09'},
-        //   {'count':40,'date':'2019-05-10'},
-        //   {'count':45,'date':'2019-05-11'},
-        //   {'count':38,'date':'2019-05-12'},
-        // ];
-
+      
         let aCount = [];
         let aDate = [];
 

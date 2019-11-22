@@ -1,15 +1,5 @@
 // index.js  
-// 获取元素
-var $logout = $('#logout');
-console.log($logout);
-// 获取用户信息
-var $userImg = $(".userImg");
-var $userName = $('#userName');
 
-// 获取搜索框信息
-var $ipt = $("#ipt");
-var $search = $('#search');
-console.log($ipt,$search);
 
 
 $logout.click(function () {
