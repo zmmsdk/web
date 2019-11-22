@@ -1,10 +1,14 @@
 // user对象
 let post_url =   'http://localhost:8000/';
-// import { post_url,user }  from 'config.js'
+// url后缀参数(用对象提参数和方法)
+var last_url = {
+    admin_login : 'admin/login',
+};
+
 var user ={
     // 登入
     login :function login(user_name,password,callback){
-        $.post(`${post_url}admin/login`,{user_name,password},function(res){
+        $.post(`${post_url}${last_url.admin_login}`,{user_name,password},function(res){
                 callback(res);
         })
     },
