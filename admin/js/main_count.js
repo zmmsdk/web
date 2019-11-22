@@ -2,21 +2,7 @@
 var curve_show = `curve_show`;
 
 
-var article = {
-   
-    article_url: 'http://localhost:8000/',
-     // 文章数量统计
-    admin_article_count:'admin/article_count',
-    // 评论数量统计
-    admin_comment_count:'admin/comment_count',
-    // 月新增文章数
-    admin_month_article_count:'admin/month_article_count',
-    // 各类型文档数量统计
-    admin_article_category_count:'admin/article_category_count',
-    // 月文章访问量
-    admin_article_category_visit:'admin/article_category_visit',
-    
-}
+
 // 文章数量统计
 $.get(`${article.article_url}${article.admin_article_count}`, function (res) {
     console.log(res);
@@ -25,7 +11,6 @@ $.get(`${article.article_url}${article.admin_article_count}`, function (res) {
         $day_count.text(res.data.day_count);
     }
 });
-
 // 评论数量统计
 $.get(`${article.article_url}${article.admin_comment_count}`, function (res) {
     console.log(res);
