@@ -1,3 +1,4 @@
+// 管理员信息对象
 var user ={
     // 登入
     login :function login(user_name,password,callback){
