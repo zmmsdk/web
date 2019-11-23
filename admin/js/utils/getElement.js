@@ -30,3 +30,7 @@ var $btnLogin = $('#btnLogin');
 var $uname = $('#uname');
 var $mypassword = $('#mypassword');
 var $index_html = './index.html' ;
+
+// article_list.html 获取元素
+var $articleContainer =  $('#articleContainer');
+var $temp_table = 'temp_table' ;

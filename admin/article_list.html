@@ -250,28 +250,28 @@
             </table>
 
             <div class="row text-center">
-            <ul class="pagination pagination-sm">
-                <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
-                <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
-                <li class="page-item active"><a href="#" class="page-link">1</a></li>
-                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                <li class="page-item"><a href="#" class="page-link">3</a></li>
-                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                <li class="page-item"><a href="#" class="page-link">6</a></li>
-                <li class="page-item"><a href="#" class="page-link">7</a></li>
-                <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
-                <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
-            </ul>
-        </div>
+                <ul class="pagination pagination-sm">
+                    <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
+                    <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">6</a></li>
+                    <li class="page-item"><a href="#" class="page-link">7</a></li>
+                    <li class="page-item next"><a href="#" class="page-link">下一页</a></li>
+                    <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
 
     <script>
         // 设置左侧菜单
-        $('#release_btn').click(function(){
-            window.parent.setMenu(1,1);
+        $('#release_btn').click(function () {
+            window.parent.setMenu(1, 1);
         })
     </script>
     <!--1. 引入模板引擎文件 -->
@@ -292,21 +292,25 @@
         </tr>
         {{/each}}
     </script>
+    <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/article.js"></script>
+    <script src="./js/utils/getElement.js"></script>
+
     <script>
-  
-    // <!-- 3通过ajax回调函数拿数据 -->
-    $.get('http://localhost:8000/admin/search',function(res){
-        console.log(res);
-        // 4.  渲染数据
-        if(res.code === 200){
-        // 使用模板引擎技术，渲染数据
-        // var htmlStr = template(id，res)
-        var htmlStr = template('temp_table' ,res )
-        console.log(htmlStr)
-        $('#articleContainer').html( htmlStr )
-    }
-        
-    })
+     
+        // 调用文章列表
+        article_list.article_list_first(function (res) {
+            console.log(res);
+            // 4.  渲染数据
+            if (res.code === 200) {
+                // 使用模板引擎技术，渲染数据
+                // var htmlStr = template(id，res)
+                var htmlStr = template($temp_table, res)
+                console.log(htmlStr)
+                $articleContainer.html(htmlStr)
+            }
+
+        })
     </script>
 
 </body>

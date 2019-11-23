@@ -23,3 +23,9 @@ var article = {
     admin_article_category_visit: 'admin/article_category_visit',
 
 }
+
+
+// article_list页面接口
+var article_url = {
+    admin_search : 'admin/search ' ,
+}
