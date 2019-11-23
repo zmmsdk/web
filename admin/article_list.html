@@ -53,11 +53,11 @@
                         <th class="text-center" width="100">操作</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="articleContainer">
 
 
 
-                    <tr>
+                    <!-- <tr>
                         
                         <td>王积千造统最头</td>
                         <td>杰克</td>
@@ -243,7 +243,7 @@
                             <a href="post-edit.html?id=995" class="btn btn-default btn-xs">编辑</a>
                             <a href="javascript:deleteTr( 995 );" class="btn btn-danger btn-xs">删除</a>
                         </td>
-                    </tr>
+                    </tr> -->
 
 
                 </tbody>
@@ -273,6 +273,40 @@
         $('#release_btn').click(function(){
             window.parent.setMenu(1,1);
         })
+    </script>
+    <!--1. 引入模板引擎文件 -->
+    <script src="./js/template-web.js"></script>
+    <!--2. 定义模板注意指定script的id和type属性 -->
+    <script id="temp_table" type="text/html">
+        {{each data item}}
+        <tr>
+            <td>{{item.title}}</td>
+            <td>{{item.author}}</td>
+            <td>{{item.type}}</td>
+            <td class="text-center">{{item.date}}</td>
+            <td class="text-center">{{item.state}}</td>
+            <td class="text-center">
+                <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:deleteTr( 1005 );" class="btn btn-danger btn-xs">删除</a>
+            </td>
+        </tr>
+        {{/each}}
+    </script>
+    <script>
+  
+    // <!-- 3通过ajax回调函数拿数据 -->
+    $.get('http://localhost:8000/admin/search',function(res){
+        console.log(res);
+        // 4.  渲染数据
+        if(res.code === 200){
+        // 使用模板引擎技术，渲染数据
+        // var htmlStr = template(id，res)
+        var htmlStr = template('temp_table' ,res )
+        console.log(htmlStr)
+        $('#articleContainer').html( htmlStr )
+    }
+        
+    })
     </script>
 
 </body>
