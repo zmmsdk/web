@@ -23,22 +23,23 @@
             写文章
         </div>
         <div class="container-fluid common_con">
-            <form class="form-horizontal article_form">
+            <form class="form-horizontal article_form" id="my_form">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label" name="title">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="文章标题">
+                        <input type="email" class="form-control" id="inputEmail3" placeholder="文章标题" name="title">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" id="exampleInputFile" name="cover">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
+                        <!--  name="type" -->
                         <select class="form-control">
                             <option>1</option>
                             <option>2</option>
@@ -53,7 +54,7 @@
                     <div class="col-sm-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="YYYY-MM-DD" id="dateinput">
+                            <input type="text" class="form-control" placeholder="YYYY-MM-DD" id="dateinput" name="date">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"
                                     onclick="jeDate('#dateinput',{trigger:false,format: 'YYYY-MM-DD'})"><i
@@ -65,21 +66,75 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
-                        <textarea class="form-control" id="rich_content" name="content" placeholder="文章内容">
+                        <textarea class="form-control" id="rich_content" name="content" placeholder="文章内容"
+                            name="content">
                             Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fugiat illo nihil molestias ab. Laborum eius non atque, totam sapiente quae obcaecati assumenda ratione inventore pariatur maiores, qui libero delectus.
                             </textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">发布</button>
+                        <button type="button" class="btn btn-success" id="sub_btn">发布</button>
                         <button type="submit" class="btn btn-default">存为草稿</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
+    <script>
+        var sub_btn = $('#sub_btn');
+        sub_btn.click(function () {
+            // 1.创建FormData对象(搜集不到表单信息)
+            var fd = new FormData(document.getElementById('my_form'));
+            console.log(fd);
+            // 查看fd对象中保存的表单元素的值：fd.get("表单元素的name属性值")
+            console.log(fd.get('title'))
+            // 发送请求
+            //     $.ajax({
+            //         url:'http://localhost:8000/admin/article_publish',
+            //         type: 'post' ,
+            //         data:fd,
+            //         success:function(res){
+            //             console.log(res);
 
+            //         }
+            //     })
+                
+    // 3.向接口发请求
+    // 当发post时，如果通过formData收集参数，则
+    // (1)不要设置请求头
+    // (2)直接把fd对象放在send()中。xhr.send(fd)
+      // 2.4 发送请求，添加数据
+      $.ajax({
+        type: 'post',
+        url: 'http://localhost:8000/admin/article_publish',//bug~：服务器接口错误
+        data: fd,
+        processData: false,
+        // 不设置content-type，而是当设置了formdata上传文件的时候，xhr对象会自动把content-type设置为multipart/form-data;
+        contentType: false,
+        success: function (data) {
+            console.log(data);
+            
+            // 判断添加是否成功...
+            if(data){
+                  // 2.5 跳转回首页
+            location.href = './index.html';
+            }else{
+                alert(msg)
+            }
+          
+        }
+    });
+
+        });
+
+
+// 请求数据
+// $.post('http://localhost:8000/admin/article_publish',{fd},function(res){
+//     console.log(res);
+
+// })
+    </script>
 </body>
 
 </html>

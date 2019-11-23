@@ -297,9 +297,7 @@
     <script src="./js/utils/getElement.js"></script>
     <!-- 引入插件js -->
     <script src="./js/jquery.twbsPagination.js"></script>
-
     <script>
-
         // 显示文章列表
         function get_data_show() {
             article_list.article_list_first(function (res) {
@@ -312,10 +310,7 @@
                     // console.log(htmlStr)
                     $articleContainer.html(htmlStr)
                 }
-
             })
-
-
         }
         get_data_show()
         //分页插件(存在问题)
@@ -339,9 +334,8 @@
                 $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
                     // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
                     res.totalPages = curPage;
-                    console.log(res.totalPages);
-                    console.log(res.data);
-
+                    // console.log(res.totalPages);
+                    // console.log(res.data);
 
                     // 4.  渲染数据
                     if (res.code === 200) {
@@ -351,9 +345,6 @@
                         // console.log(htmlStr)
                         $articleContainer.html(htmlStr)
                     }
-
-
-
                 })
 
             }
