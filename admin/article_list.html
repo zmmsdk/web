@@ -250,7 +250,7 @@
             </table>
 
             <div class="row text-center">
-                <ul class="pagination pagination-sm">
+                <ul class="pagination pagination-sm" id="pagination-demo">
                     <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
                     <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
@@ -295,22 +295,68 @@
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/utils/getElement.js"></script>
+    <!-- 引入插件js -->
+    <script src="./js/jquery.twbsPagination.js"></script>
 
     <script>
-     
-        // 调用文章列表
-        article_list.article_list_first(function (res) {
-            console.log(res);
-            // 4.  渲染数据
-            if (res.code === 200) {
-                // 使用模板引擎技术，渲染数据
-                // var htmlStr = template(id，res)
-                var htmlStr = template($temp_table, res)
-                console.log(htmlStr)
-                $articleContainer.html(htmlStr)
-            }
 
-        })
+        // 显示文章列表
+        function get_data_show() {
+            article_list.article_list_first(function (res) {
+                console.log(res);
+                // 4.  渲染数据
+                if (res.code === 200) {
+                    // 使用模板引擎技术，渲染数据
+                    // var htmlStr = template(id，res)
+                    var htmlStr = template($temp_table, res)
+                    // console.log(htmlStr)
+                    $articleContainer.html(htmlStr)
+                }
+
+            })
+
+
+        }
+        get_data_show()
+    //分页插件(存在问题)
+    // 保存当前要查询的页数
+    var curPage;
+    $('#pagination-demo').twbsPagination({
+            totalPages: 46, // 总页数
+          
+            visiblePages: 6, // 可见页数
+            first:'首页',
+            prev:'上一页',
+            next:'下一页',
+            last:'尾页',
+            onPageClick: function (event, page) {
+                // alert(page);
+                // 把page的值给curPage 分页任务结束 请求数据开始
+                curPage = page ;
+                alert(curPage);
+                         
+            }
+        });
+
+
+
+         // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
+         $.get('http://localhost:8000/admin/search',function(res){
+                    console.log(res.totalPage);
+                   
+                    // curPage = page;
+                    // get_data_show()
+                    //                  
+                })  
+    </script> 
+
+
+    </script>
+
+
+
+    <script>
+
     </script>
 
 </body>

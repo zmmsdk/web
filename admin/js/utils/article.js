@@ -8,5 +8,6 @@ var article_list = {
             callback(res)
 
         })
-    }
+    },
+  
 }
