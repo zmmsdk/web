@@ -287,7 +287,7 @@
             <td class="text-center">{{item.state}}</td>
             <td class="text-center">
                 <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
-                <a href="javascript:deleteTr( 1005 );" class="btn btn-danger btn-xs">删除</a>
+                <a href="javascript:;" class="btn btn-danger btn-xs del" id = 'delete' data-id="{{item.id}}">删除</a>
             </td>
         </tr>
         {{/each}}
@@ -334,15 +334,15 @@
                 $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
                     // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
                     res.totalPages = curPage;
-                    // console.log(res.totalPages);
+                    // console.log(res.totalPages);0
                     // console.log(res.data);
 
-                    // 4.  渲染数据
+                    // 4.  渲染数据·
                     if (res.code === 200) {
                         // 使用模板引擎技术，渲染数据
                         // var htmlStr = template(id，res)
                         var htmlStr = template($temp_table, res)
-                        // console.log(htmlStr)
+                        // console.log(htmlStr)+
                         $articleContainer.html(htmlStr)
                     }
                 })
@@ -356,12 +356,43 @@
     </script>
 
 
-    </script>
-
+    <!-- </script> -->
 
 
     <script>
+    // <!-- 删除功能 -->
+    // jquery事件委托
+    // $(父元素id).on('click','.子元素类名', function(){  }
+    // 文章删除
+    $('#articleContainer').on('click','.del', function(){
+        if(window.confirm('确认要删除吗？') === false){
+            return;
+        }
+        // 从dom中取出自定义 属性
+        var id = $(this).attr('data-id')
+        // var this_element = $(this).parents('tr').remove()
+        // 去调用 article.js中的方法，去做删除
+        console.log(id);
 
+        $.get('http://localhost:8000/admin/article_delete',{'id': id},function(res){
+            console.log(res);
+            if(res.code === 200){
+                var this_element = $(this).parents('tr').remove()
+            }
+            else{
+                alert(msg);
+            }
+            
+        })
+        // article.del(id,function(res){
+        //     if(res.code === 200){
+        //         // 删除成功，重新请求
+        //         // <!-- getAndShow() -->
+        //         alert('dom删除成功')
+        //     }
+
+        // })
+    })
     </script>
 
 </body>
