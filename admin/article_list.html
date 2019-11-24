@@ -286,10 +286,18 @@
             <td class="text-center">{{item.date}}</td>
             <td class="text-center">{{item.state}}</td>
             <td class="text-center">
-                <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+                <a href="javascript:;" class="btn btn-default btn-xs edit" data-id="{{item.id}}">编辑</a>
                 <a href="javascript:;" class="btn btn-danger btn-xs del" id = 'delete' data-id="{{item.id}}">删除</a>
             </td>
         </tr>
+        {{/each}}
+    </script>
+    <!-- 2.定义筛选模板 -->
+
+    <script id="temp_cate" type='text/html'>
+        <option value="">所有分类</option>             
+        {{each data item}}
+            <option value="{{item.id}}">{{item.name}}</option>
         {{/each}}
     </script>
     <script src="./js/utils/config.js"></script>
@@ -316,84 +324,117 @@
         //分页插件(存在问题)
         // 保存当前要查询的页数
         var curPage;
-        $('#pagination-demo').twbsPagination({
-            totalPages: 46, // 总页数
+        function fenye() {
+            $('#pagination-demo').twbsPagination({
+                totalPages: 46, // 总页数
 
-            visiblePages: 6, // 可见页数
-            first: '首页',
-            prev: '上一页',
-            next: '下一页',
-            last: '尾页',
-            onPageClick: function (event, page) {
-                // alert(page);
-                // 把page的值给curPage 分页任务结束 请求数据开始
-                curPage = page;
-                // alert(curPage);
+                visiblePages: 6, // 可见页数
+                first: '首页',
+                prev: '上一页',
+                next: '下一页',
+                last: '尾页',
+                onPageClick: function (event, page) {
+                    // alert(page);
+                    // 把page的值给curPage 分页任务结束 请求数据开始
+                    curPage = page;
+                    // alert(curPage);
 
-                // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
-                $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
-                    // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
-                    res.totalPages = curPage;
-                    // console.log(res.totalPages);0
-                    // console.log(res.data);
+                    // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
+                    $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
+                        // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+                        res.totalPages = curPage;
+                        // console.log(res.totalPages);0
+                        // console.log(res.data);
 
-                    // 4.  渲染数据·
-                    if (res.code === 200) {
-                        // 使用模板引擎技术，渲染数据
-                        // var htmlStr = template(id，res)
-                        var htmlStr = template($temp_table, res)
-                        // console.log(htmlStr)+
-                        $articleContainer.html(htmlStr)
-                    }
-                })
+                        // 4.  渲染数据·
+                        if (res.code === 200) {
+                            // 使用模板引擎技术，渲染数据
+                            // var htmlStr = template(id，res)
+                            var htmlStr = template($temp_table, res)
+                            // console.log(htmlStr)+
+                            $articleContainer.html(htmlStr)
+                        }
+                    })
 
-            }
-        });
+                }
+            });
 
+        }
 
-
+        fenye()
 
     </script>
-
-
-    <!-- </script> -->
-
 
     <script>
-    // <!-- 删除功能 -->
-    // jquery事件委托
-    // $(父元素id).on('click','.子元素类名', function(){  }
-    // 文章删除
-    $('#articleContainer').on('click','.del', function(){
-        if(window.confirm('确认要删除吗？') === false){
-            return;
-        }
-        // 从dom中取出自定义 属性
-        var id = $(this).attr('data-id')
-        // var this_element = $(this).parents('tr').remove()
-        // 去调用 article.js中的方法，去做删除
-        console.log(id);
+        // <!-- 删除功能 -->
+        // jquery事件委托
+        // $(父元素id).on('click','.子元素类名', function(){  }
+        // 文章删除
+        $('#articleContainer').on('click', '.del', function () {
+            if (window.confirm('确认要删除吗？') === false) {
+                return;
+            }
+            // 从dom中取出自定义 属性
+            var id = $(this).attr('data-id')
+            // var this_element = $(this).parents('tr').remove()
+            // 去调用 article.js中的方法，去做删除
+            console.log(id);
 
-        $.get('http://localhost:8000/admin/article_delete',{'id': id},function(res){
-            console.log(res);
-            if(res.code === 200){
-                var this_element = $(this).parents('tr').remove()
-            }
-            else{
-                alert(msg);
-            }
-            
+            $.get('http://localhost:8000/admin/article_delete', { 'id': id }, function (res) {
+                console.log(res);
+                if (res.code === 200) {
+                    var this_element = $(this).parents('tr').remove()
+                }
+                else {
+                    alert(msg);
+                }
+
+            })
+
         })
-        // article.del(id,function(res){
-        //     if(res.code === 200){
-        //         // 删除成功，重新请求
-        //         // <!-- getAndShow() -->
-        //         alert('dom删除成功')
-        //     }
-
-        // })
-    })
     </script>
+    <script>
+        // 文章筛选
+        $('#btnSearch').click(function () {
+            // 1. 获取当前的筛选条件。保存到全局变量中
+            // 如何获取下拉列表中当前选中的值
+            type = $('#selCategory').val()
+            state = $('#selStatus').val()
+            console.log(type, state);
+
+            // 筛选条件变化，直接固定选第一页
+            curPage = 1
+
+            // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有数据
+            $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage, type: type, state: state }, function (res) {
+                console.log(res);
+                console.log(res.key);
+
+
+            })
+        })
+    </script>
+    <script>
+        //  事件委托获取编辑的id
+        // jquery事件委托
+        // $(父元素id).on('click','.子元素类名', function(){  }
+        $('#articleContainer').on('click', '.edit', function () {
+            // if(window.confirm('确认要编辑吗？') === false){
+            //     return;
+            // }
+            // 从dom中取出自定义 属性
+            var id = $(this).attr('data-id')
+            $.get('http://localhost:8000/admin/search', { id: id }, function (res) {
+                console.log(res.data.id);
+                //   console.log('页面跳转');
+                location.href = `article_edit.html?id=${id}`;
+            })
+
+
+        });
+
+    </script>
+
 
 </body>
 
