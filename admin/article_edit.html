@@ -33,19 +33,19 @@
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
-                        <img src="images/pic06.jpg" class="article_cover">
+                        <img src="images/pic06.jpg" class="article_cover" id="article_cover">
                         <input type="file" id="exampleInputFile">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control">
-                            <option>类别一</option>
+                        <select class="form-control" id="option">
+                            <!-- <option>类别一</option>
                             <option>类别二</option>
                             <option>类别三</option>
                             <option selected>类别四</option>
-                            <option>类别五</option>
+                            <option>类别五</option> -->
                         </select>
                     </div>
                 </div>
@@ -77,6 +77,15 @@
             </form>
         </div>
     </div>
+ <script src="./js/jquery-1.12.4.min.js"></script>
+ <!-- 模板引擎1引入 -->
+ <script src="./js/template-web.js"></script>
+ <!-- 模板引擎2创建模板 -->
+ <script id="tmp" type="text/html">
+{each data }
+  <option>{{data.name}}</option> 
+{/each}
+</script>
 <script src="./js/article_edit.js"></script>
 </body>
 

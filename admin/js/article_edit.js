@@ -28,4 +28,28 @@ function getParams(url) {
 //   console.log(obj.age);
 
 
+// 根据id再次请求
+$.get('http://localhost:8000/admin/search',{id:obj.id},function(res){
+    console.log(res);
+    // 将获取的内容显示在表单元素中
+     $('#inputEmail3').val(res.data.title);
+     $('#article_cover').prop("src",res.data.cover);
+     $('#dateinput').val(res.data.date);
+     $('#rich_content').val(res.data.content);
+    
+    
+
+})
+
+
+// 发请求先把下拉框分类数据拿回来渲染在页面中
+$.get('http://localhost:8000/admin/category_search',function(res){
+  console.log(res);
+  //  使用模板引擎渲染数据
+  var htmlStr = template('tmp',res);
+  $('#option').html(htmlStr);
+  
+})
+
+
 
