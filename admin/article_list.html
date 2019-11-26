@@ -23,18 +23,18 @@
                 <div class="col-xs-6">
                     <form class="form-inline">
                         <select id="selCategory" name="" class="form-control input-sm">
-                            <option>所有分类</option>
+                            <!-- <option>所有分类</option>
                             <option>未分类</option>
                             <option>奇趣事</option>
                             <option>会生活</option>
-                            <option>爱旅行</option>
+                            <option>爱旅行</option> -->
                         </select>
                         <select id="selStatus" name="" class="form-control input-sm">
-                            <option>所有状态</option>
+                            <!-- <option>所有状态</option>
                             <option value="drafted">草稿</option>
-                            <option value="published">已发布</option>
+                            <option value="published">已发布</option> -->
                         </select>
-                        <button id="btnSearch" class="btn btn-default btn-sm">筛选</button>
+                        <button id="btnSearch" class="btn btn-default btn-sm" type="button">筛选</button>
                     </form>
                 </div>
                 <div class="col-xs-6">
@@ -300,6 +300,13 @@
             <option value="{{item.id}}">{{item.name}}</option>
         {{/each}}
     </script>
+    <script id="temp_send" type='text/html'>
+        <option value="">所有分类</option>             
+        {{each data item}}
+            <option value="{{item.id}}">{{item.state}}</option>
+        {{/each}}
+    </script>
+    <!-- 定义筛选模板结束 -->
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/utils/getElement.js"></script>
@@ -394,9 +401,26 @@
         })
     </script>
 
-    <!-- 文章筛选功能开始 -->
+    <!-- 文章筛选功能开始：目标页面的发布状态 -->
+    <!-- 定义模板 -->
+
     <script>
         // 1.局部更新下拉框
+        // 发请求先把下拉框分类数据拿回来渲染在页面中
+        $.get('http://localhost:8000/admin/category_search', function (res) {
+            console.log(res);
+            //  使用模板引擎渲染数据
+            var htmlStr = template('temp_cate', res);
+            // console.log(htmlStr);
+            $('#selCategory').html(htmlStr);
+        })
+        // 局部更新发布状态下拉框
+        $.get('http://localhost:8000/admin/search', function (res) {
+            console.log(res);
+            //  使用模板引擎渲染数据
+            var htmlStr = template('temp_send', res);
+            $(' #selStatus').html(htmlStr);
+        })
         // 文章筛选
         $('#btnSearch').click(function () {
             // 1. 获取当前的筛选条件。保存到全局变量中
