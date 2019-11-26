@@ -106,7 +106,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" id="model_shutoff">关闭</button>
-          <button type="button" class="btn btn-primary" id="model_add">新增</button>
+          <button type="button" class="btn btn-primary" id="model_add">保存</button>
         </div>
       </div>
     </div>
@@ -205,26 +205,59 @@
         $('#addModal').modal('show');
         // 点击获取name slug填入表单：
         // 1.选中编辑按钮的父元素的兄弟元素的值
-       // 获取当前编辑的类别信息
-            // 获取自定义属性
-            var id = $(this).attr('data-id')
-            var name = $(this).attr('data-name')
-            var slug = $(this).attr('data-slug')
-            console.log(id,name, slug);
-            // 显示编辑模态框
-            $('#editModal').modal('show')
+        // 获取当前编辑的类别信息
+        // 获取自定义属性
+        var id = $(this).attr('data-id')
+        var name = $(this).attr('data-name')
+        var slug = $(this).attr('data-slug')
+        console.log(id, name, slug);
+        // 显示编辑模态框
+        $('#editModal').modal('show')
 
-            // 并且显示当前编辑的类别的数据
-            $('#recipient-id-name').val( id )
-            $('#recipient-name').val( name )
-            $('#recipient-other-name').val( slug )
-       
+        // 并且显示当前编辑的类别的数据
+        $('#recipient-id-name').val(id)
+        $('#recipient-name').val(name)
+        $('#recipient-other-name').val(slug)
+
 
       }
     })  
   </script>
 
   <!-- 编辑分类结束 -->
+  <!-- 编辑保存开始 -->
+  <script>
+    // 
+
+    // 编辑 -  保存
+    $('#model_add').click(function () {
+      // 获取用户填入的信息
+      var id = $('#recipient-id-name').val().trim()
+      var name = $('#recipient-name').val().trim()
+      var slug = $('#recipient-other-name').val().trim()
+      // 简单判断是否为空
+      if (name === '' || slug === '') {
+        alert('不能为空')
+        return;
+      }
+      console.log(id, name, slug);
+      // 发请求
+      
+        // 修改成功
+        // 1. 重新请求，更新页面
+        $.post('http://localhost:8000/admin/category_edit', { id: id, name: name, slug: slug }, function (res) {
+          if (res.code === 200) {
+          console.log(res);
+          }
+        });
+        // 2. 隐藏模态框
+        $('#editModal').modal('hide');
+      
+    })
+
+
+  </script>
+  <!-- 编辑保存结束 -->
 </body>
 
 </html>
