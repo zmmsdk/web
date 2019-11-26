@@ -79,7 +79,7 @@
       </table>
     </div>
   </div>
-
+  <!-- 模态框显示内容开始 -->
   <div class="modal fade" id="addModal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -89,6 +89,10 @@
         </div>
         <div class="modal-body">
           <form id="new_data">
+            <div class="form-group" style="display: none;">
+              <label for="recipient-name" class="control-label">分类id:</label>
+              <input type="text" class="form-control" id="recipient-id-name" data-id="recipient_name" name="name">
+            </div>
             <div class="form-group">
               <label for="recipient-name" class="control-label">分类名称:</label>
               <input type="text" class="form-control" id="recipient-name" data-id="recipient_name" name="name">
@@ -107,7 +111,7 @@
       </div>
     </div>
   </div>
-
+  <!-- 模态框显示内容结束 -->
   <script>
     $('#addModal').modal({
       show: false,
@@ -124,12 +128,7 @@
     //   $('#addModal').modal('hide');
     // });
 
-    $('.category_table').delegate('a', 'click', function () {
-      if ($(this).hasClass('btn-info')) {
-        $('#addModal .modal-title').html('修改分类名称');
-        $('#addModal').modal('show');
-      }
-    })      
+
   </script>
   <script src="./js/category.js"></script>
 
@@ -155,9 +154,8 @@
           <td>{{item.name}}</td>
           <td>{{item.slug}}</td>
           <td class="text-center">
-              <a href="javascript:editTr({&quot;id&quot;:&quot;1&quot;,&quot;slug&quot;:&quot;uncategorized&quot;,&quot;name&quot;:&quot;未分类&quot;});"
-                  class="btn btn-info btn-xs">编辑</a>
-              <a href="javascript:deleteTr( 1 );" class="btn btn-danger btn-xs">删除</a>
+              <a href="javascript:;"class="btn btn-info btn-xs" data-id={{item.id}} data-name="{{item.name}}" data-slug="{{item.slug}}">编辑</a>
+              <a href="javascript:;" class="btn btn-danger btn-xs" data-id={{item.id}}>删除</a>
           </td>
       </tr>
   {{/each}}
@@ -199,7 +197,34 @@
 
   </script>
   <!-- 新增文章类别结束 -->
+  <!-- 编辑分类开始 -->
+  <script>
+    $('.category_table').delegate('a', 'click', function () {
+      if ($(this).hasClass('btn-info')) {
+        $('#addModal .modal-title').html('修改分类名称');
+        $('#addModal').modal('show');
+        // 点击获取name slug填入表单：
+        // 1.选中编辑按钮的父元素的兄弟元素的值
+       // 获取当前编辑的类别信息
+            // 获取自定义属性
+            var id = $(this).attr('data-id')
+            var name = $(this).attr('data-name')
+            var slug = $(this).attr('data-slug')
+            console.log(id,name, slug);
+            // 显示编辑模态框
+            $('#editModal').modal('show')
 
+            // 并且显示当前编辑的类别的数据
+            $('#recipient-id-name').val( id )
+            $('#recipient-name').val( name )
+            $('#recipient-other-name').val( slug )
+       
+
+      }
+    })  
+  </script>
+
+  <!-- 编辑分类结束 -->
 </body>
 
 </html>
