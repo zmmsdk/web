@@ -331,6 +331,7 @@
         //分页插件(存在问题)
         // 保存当前要查询的页数
         var curPage;
+
         function fenye() {
             $('#pagination-demo').twbsPagination({
                 totalPages: 46, // 总页数
@@ -351,7 +352,7 @@
                         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
                         res.totalPages = curPage;
                         // console.log(res.totalPages);0
-                        // console.log(res.data);
+                        console.log(res.data);
 
                         // 4.  渲染数据·
                         if (res.code === 200) {
@@ -365,10 +366,10 @@
 
                 }
             });
-
         }
-
         fenye()
+
+
 
     </script>
 
@@ -421,24 +422,74 @@
             var htmlStr = template('temp_send', res);
             $(' #selStatus').html(htmlStr);
         })
-        // 文章筛选
+
+
+
+
+        // 文章筛选：1.点击筛选拿回所有数据
         $('#btnSearch').click(function () {
             // 1. 获取当前的筛选条件。保存到全局变量中
             // 如何获取下拉列表中当前选中的值
+
             type = $('#selCategory').val()
             state = $('#selStatus').val()
             console.log(type, state);
 
             // 筛选条件变化，直接固定选第一页
             curPage = 1
+            if (type === "" || state === "") {
+                alert('您的输入为空请重新输入')
+            } else {
+                // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有符合要求的数据
+                $.get('http://localhost:8000/admin/search', { type: type }, function (res) {
+                    console.log(res);
+                    totalPage = res.totalPage;
+                    // 对所有符合要求的数据在页面局部更新
+                    // 使用模板引擎技术，渲染数据
+                    // var htmlStr = template(id，res)
+                    var htmlStr = template($temp_table, res)
+                    $articleContainer.html(htmlStr)
 
-            // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有数据
-            $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage, type: type, state: state }, function (res) {
-                console.log(res);
-                console.log(res.key);
+
+                    // 对目标数据进行分页
+                    $('#pagination-demo').twbsPagination({
+                        totalPages: totalPage, // 当前总页数
+
+                        visiblePages: 6, // 可见页数
+                        first: '首页',
+                        prev: '上一页',
+                        next: '下一页',
+                        last: '尾页',
+                        onPageClick: function (event, page) {
+                            // alert(page);
+                            // 把page的值给curPage 分页任务结束 请求数据开始
+                            curPage = page;
+                            // alert(curPage);
+
+                            // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
+                            $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
+                                // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+                                res.totalPages = curPage;
+                                // console.log(res.totalPages);0
+                                console.log(res.data);
+
+                                // 4.  渲染数据·
+                                if (res.code === 200) {
+                                    // 使用模板引擎技术，渲染数据
+                                    // var htmlStr = template(id，res)
+                                    var htmlStr = template($temp_table, res)
+                                    // console.log(htmlStr)+
+                                    $articleContainer.html(htmlStr)
+                                }
+                            })
+
+                        }
+                    });
+                })
+            }
 
 
-            })
+
         })
     </script>
     <!-- 文章筛选功能结束 -->
