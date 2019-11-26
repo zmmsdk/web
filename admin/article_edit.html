@@ -27,20 +27,20 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" value="文章标题文字">
+                        <input type="email" class="form-control" id="inputEmail3" value="文章标题文字" name="title">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
                         <img src="images/pic06.jpg" class="article_cover" id="article_cover">
-                        <input type="file" id="exampleInputFile">
+                        <input type="file" id="exampleInputFile" name="cover">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control" id="option">
+                        <select class="form-control" id="option" name="type">
                             <!-- <option>类别一</option>
                             <option>类别二</option>
                             <option>类别三</option>
@@ -54,7 +54,7 @@
                     <div class="col-sm-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" value="2019-05-17" id="dateinput">
+                            <input type="text" class="form-control" value="2019-05-17" id="dateinput" name="date">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"
                                     onclick="jeDate('#dateinput',{trigger:false,format: 'YYYY-MM-DD'})"><i
@@ -66,27 +66,28 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容" value="文章内容">
+                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容"
+                            value="文章内容">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">修改</button>
+                        <button type="button" class="btn btn-success" id="get_change">修改</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
- <script src="./js/jquery-1.12.4.min.js"></script>
- <!-- 模板引擎1引入 -->
- <script src="./js/template-web.js"></script>
- <!-- 模板引擎2创建模板 -->
- <script id="tmp" type="text/html">
-{each data }
-  <option>{{data.name}}</option> 
-{/each}
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <!-- 模板引擎1引入 -->
+    <script src="./js/template-web.js"></script>
+    <!-- 模板引擎2创建模板 -->
+    <script id="tmp" type="text/html">
+        {{each data item}}
+        <option value="{{item.id}}" id="{{item.id}}" >{{item.name}}</option>
+    {{/each}}
 </script>
-<script src="./js/article_edit.js"></script>
+    <script src="./js/article_edit.js"></script>
 </body>
 
 </html>

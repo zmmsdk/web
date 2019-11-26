@@ -92,52 +92,52 @@
             console.log(fd);
             // 查看fd对象中保存的表单元素的值：fd.get("表单元素的name属性值")
             console.log(fd.get('title'))
-       
-                
-    // 3.向接口发请求
-    // 当发post时，如果通过formData收集参数，则
-    // (1)不要设置请求头
-    // (2)直接把fd对象放在send()中。xhr.send(fd)
-      // 2.4 发送请求，添加数据
-      $.ajax({
-        type: 'post',
-        url: 'http://localhost:8000/admin/article_publish',//bug~：服务器接口错误
-        data: fd,
-        processData: false,
-        // 不设置content-type，而是当设置了formdata上传文件的时候，xhr对象会自动把content-type设置为multipart/form-data;
-        contentType: false,
-        success: function (data) {
-            console.log(data);
-            
-            // 判断添加是否成功...
-            if(data){
-                  // 2.5 跳转回首页
-            location.href = './index.html';
-            }else{
-                alert(msg)
-            }
-          
-        }
-    });
+
+
+            // 3.向接口发请求
+            // 当发post时，如果通过formData收集参数，则
+            // (1)不要设置请求头
+            // (2)直接把fd对象放在send()中。xhr.send(fd)
+            // 2.4 发送请求，添加数据
+            $.ajax({
+                type: 'post',
+                url: 'http://localhost:8000/admin/article_publish',//bug~：服务器接口错误
+                data: fd,
+                processData: false,
+                // 不设置content-type，而是当设置了formdata上传文件的时候，xhr对象会自动把content-type设置为multipart/form-data;
+                contentType: false,
+                success: function (data) {
+                    console.log(data);
+
+                    // 判断添加是否成功...
+                    if (data) {
+                        // 2.5 跳转回首页
+                        location.href = './index.html';
+                    } else {
+                        alert(msg)
+                    }
+
+                }
+            });
 
         });
 
 
     </script>
     <script>
-    // 上传·预览
-// 2.上传预览功能
-    // input_avatar就是file控件的内容发生变化执行
-    $('#exampleInputFile').change(function () {
-        console.log('上传功能执行了');
-        // 如果没有选择文件，返回
-        if (!this.files[0]) return;
+        // 上传·预览
+        // 2.上传预览功能
+        // input_avatar就是file控件的内容发生变化执行
+        $('#exampleInputFile').change(function () {
+            console.log('上传功能执行了');
+            // 如果没有选择文件，返回
+            if (!this.files[0]) return;
 
-        var url = URL.createObjectURL(this.files[0]);
+            var url = URL.createObjectURL(this.files[0]);
 
-        // 设置图片的src
-        $('#ava').attr('src', url);
-    });
+            // 设置图片的src
+            $('#ava').attr('src', url);
+        });
     </script>
 </body>
 
