@@ -155,7 +155,7 @@
           <td>{{item.slug}}</td>
           <td class="text-center">
               <a href="javascript:;"class="btn btn-info btn-xs" data-id={{item.id}} data-name="{{item.name}}" data-slug="{{item.slug}}">编辑</a>
-              <a href="javascript:;" class="btn btn-danger btn-xs" data-id={{item.id}}>删除</a>
+              <a href="javascript:;" class="btn btn-danger btn-xs del" data-id={{item.id}} cateContainer>删除</a>
           </td>
       </tr>
   {{/each}}
@@ -242,22 +242,63 @@
       }
       console.log(id, name, slug);
       // 发请求
-      
-        // 修改成功
-        // 1. 重新请求，更新页面
-        $.post('http://localhost:8000/admin/category_edit', { id: id, name: name, slug: slug }, function (res) {
-          if (res.code === 200) {
+
+      // 修改成功
+      // 1. 重新请求，更新页面
+      $.post('http://localhost:8000/admin/category_edit', { id: id, name: name, slug: slug }, function (res) {
+        if (res.code === 200) {
           console.log(res);
-          }
-        });
-        // 2. 隐藏模态框
-        $('#editModal').modal('hide');
-      
+        }
+      });
+      // 2. 隐藏模态框
+      $('#editModal').modal('hide');
+
     })
 
 
   </script>
   <!-- 编辑保存结束 -->
+  <!-- 删除功能开始 -->
+  <script>
+    // 删除
+    // $(容器).on(事件名， 委托人，回调)
+    $('#article_cate').on('click', '.del', function () {
+      if (window.confirm('确定要删除吗？') === false) {
+        // 取消删除 
+        return;
+      }
+      // 获取自定义属性
+      var id = $(this).attr('data-id')
+      console.log(id);
+      $.post('http://localhost:8000/admin/category_delete', { id: id }, function (res) {
+        console.log(res);
+        if (res.code === 200) {
+          // 删除成功
+          // 1. 直接在页面上删除dom节点（有可能会导致数据不同步）
+          //    方法一，不使用。
+          //    用第二种方法
+          // 2. 重新获取数据
+          $.get('http://localhost:8000/admin/category_search', function (res) {
+            console.log(res);
+            //4. 使用模板引擎技术，渲染数据
+            {  // var htmlStr = template(id，res)
+              var htmlStr = template('temp_insert', res)
+              // console.log(htmlStr)+
+              $('#article_cate').html(htmlStr)
+            }
+
+          })
+
+        } else {
+          alert(res.msg)
+        }
+      })
+
+
+    })
+
+  </script>
+  <!-- 删除功能结束 -->
 </body>
 
 </html>
