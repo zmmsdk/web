@@ -1,4 +1,4 @@
-<script id="temp_table" type="text/html">
+{/* <script id="temp_table" type="text/html"> */}
 var model_temp_table = {
     model_1 : `  {{each data item}}
     <tr>
@@ -15,4 +15,4 @@ var model_temp_table = {
     {{/each}}`,
 }
 model_temp_table.model_1;
-</script>
+{/* </script> */}

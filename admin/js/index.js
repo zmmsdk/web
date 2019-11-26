@@ -29,12 +29,13 @@ $search.click(function () {
     var va = $ipt.val().trim();
     console.log(va);
 
-    $.get('http://localhost:8000/admin/search',{key,type,state,page,perpage,id},function(res){
+    $.get('http://localhost:8000/admin/search',{type:va,},function(res){
     console.log(res);
-    if(res.code === 200){
-        var data = res.data ;
-        console.log(data);
-    }
+    // if(res.code === 200){
+    //     var data = res.data ;
+   
+    // }
+    location.href = '/article_list.html';
 });
     
     

@@ -82,16 +82,25 @@
             </form>
         </div>
     </div>
+    <!-- <script src="./js/utils/getElement.js"></script> -->
     <script>
+        // article_release.html页面参数
+        // 发布按钮
+        var $sub_btn = $('#sub_btn');
+        // form表单
+        // var my_form = document.getElementById('my_form');
 
-        var sub_btn = $('#sub_btn');
+        // 上传预览功能
+        var $exampleInputFile = $('#exampleInputFile');
+        // 设置图片的src
+        var $ava = $('#ava');
 
-        sub_btn.click(function () {
+        $sub_btn.click(function () {
             // 1.创建FormData对象(搜集不到表单信息)
             var fd = new FormData(document.getElementById('my_form'));
-            console.log(fd);
+            // console.log(fd);
             // 查看fd对象中保存的表单元素的值：fd.get("表单元素的name属性值")
-            console.log(fd.get('title'))
+            // console.log(fd.get('title'))
 
 
             // 3.向接口发请求
@@ -128,15 +137,15 @@
         // 上传·预览
         // 2.上传预览功能
         // input_avatar就是file控件的内容发生变化执行
-        $('#exampleInputFile').change(function () {
-            console.log('上传功能执行了');
+        $exampleInputFile.change(function () {
+            // console.log('上传功能执行了');
             // 如果没有选择文件，返回
             if (!this.files[0]) return;
 
             var url = URL.createObjectURL(this.files[0]);
 
             // 设置图片的src
-            $('#ava').attr('src', url);
+            $ava.attr('src', url);
         });
     </script>
 </body>

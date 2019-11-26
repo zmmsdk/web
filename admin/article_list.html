@@ -30,9 +30,9 @@
                             <option>爱旅行</option> -->
                         </select>
                         <select id="selStatus" name="" class="form-control input-sm">
-                            <!-- <option>所有状态</option>
+                            <option>所有状态</option>
                             <option value="drafted">草稿</option>
-                            <option value="published">已发布</option> -->
+                            <option value="published">已发布</option>
                         </select>
                         <button id="btnSearch" class="btn btn-default btn-sm" type="button">筛选</button>
                     </form>
@@ -300,12 +300,7 @@
             <option value="{{item.id}}">{{item.name}}</option>
         {{/each}}
     </script>
-    <script id="temp_send" type='text/html'>
-        <option value="">所有分类</option>             
-        {{each data item}}
-            <option value="{{item.id}}">{{item.state}}</option>
-        {{/each}}
-    </script>
+
     <!-- 定义筛选模板结束 -->
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
@@ -423,13 +418,7 @@
             // console.log(htmlStr);
             $('#selCategory').html(htmlStr);
         })
-        // 局部更新发布状态下拉框
-        $.get('http://localhost:8000/admin/search', function (res) {
-            console.log(res);
-            //  使用模板引擎渲染数据
-            var htmlStr = template('temp_send', res);
-            $(' #selStatus').html(htmlStr);
-        })
+    
 
 
 
@@ -449,7 +438,7 @@
                 alert('您的输入为空请重新输入')
             } else {
                 // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有符合要求的数据：
-                $.get('http://localhost:8000/admin/search', { type: type }, function (res) {
+                $.get('http://localhost:8000/admin/search', { type: type ,}, function (res) {
                     // console.log(res);
                     totalPage = res.totalPage;
                     console.log(totalPage);
@@ -483,7 +472,7 @@
                         next: '下一页',
                         last: '尾页',
                         onPageClick: function (event, page) {
-                            alert(page);
+                            // alert(page);
                         // //     // 把page的值给curPage 分页任务结束 请求数据开始
                         curPage = page;
                             console.log( totalPages);
