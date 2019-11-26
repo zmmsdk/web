@@ -83,7 +83,11 @@
         </div>
     </div>
     <!-- <script src="./js/utils/getElement.js"></script> -->
+    <script src="./js/utils/article.js"></script>
     <script>
+    
+
+
         // article_release.html页面参数
         // 发布按钮
         var $sub_btn = $('#sub_btn');
@@ -101,6 +105,30 @@
             // console.log(fd);
             // 查看fd对象中保存的表单元素的值：fd.get("表单元素的name属性值")
             // console.log(fd.get('title'))
+            var article_release = {
+                sub: function () {
+                    $.ajax({
+                        type: 'post',
+                        url: 'http://localhost:8000/admin/article_publish',//bug~：服务器接口错误
+                        data: fd,
+                        processData: false,
+                        // 不设置content-type，而是当设置了formdata上传文件的时候，xhr对象会自动把content-type设置为multipart/form-data;
+                        contentType: false,
+                        success:  (data) =>{
+                            console.log(data);
+
+                            // 判断添加是否成功...
+                            if (data) {
+                                // 2.5 跳转回首页
+                                location.href = './index.html';
+                            } else {
+                                alert(msg)
+                            }
+
+                        }
+                    });
+                }
+            }
 
 
             // 3.向接口发请求
@@ -108,30 +136,11 @@
             // (1)不要设置请求头
             // (2)直接把fd对象放在send()中。xhr.send(fd)
             // 2.4 发送请求，添加数据
-            $.ajax({
-                type: 'post',
-                url: 'http://localhost:8000/admin/article_publish',//bug~：服务器接口错误
-                data: fd,
-                processData: false,
-                // 不设置content-type，而是当设置了formdata上传文件的时候，xhr对象会自动把content-type设置为multipart/form-data;
-                contentType: false,
-                success: function (data) {
-                    console.log(data);
-
-                    // 判断添加是否成功...
-                    if (data) {
-                        // 2.5 跳转回首页
-                        location.href = './index.html';
-                    } else {
-                        alert(msg)
-                    }
-
-                }
-            });
-
+        
+            article_release.sub();
         });
 
-
+     
     </script>
     <script>
         // 上传·预览

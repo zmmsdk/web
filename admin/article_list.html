@@ -308,66 +308,81 @@
     <!-- 引入插件js -->
     <script src="./js/jquery.twbsPagination.js"></script>
     <script>
-        // 显示文章列表
-        function get_data_show() {
-            article_list.article_list_first(function (res) {
-                console.log(res);
-                // 4.  渲染数据
-                if (res.code === 200) {
-                    // 使用模板引擎技术，渲染数据
-                    // var htmlStr = template(id，res)
-                    var htmlStr = template($temp_table, res)
-                    // console.log(htmlStr)
-                    $articleContainer.html(htmlStr)
+         var article_re = {
+                    article_li: function ( curPage) {
+                        $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
+                            // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+                            res.totalPages = curPage;
+
+                            curTotalPage = res.totalPages
+                            // console.log(res.totalPages);0
+                            console.log(res.data);
+
+                            // 4.  渲染数据·
+                            if (res.code === 200) {
+                                // 使用模板引擎技术，渲染数据
+                                // var htmlStr = template(id，res)
+                                var htmlStr = template($temp_table, res)
+                                // console.log(htmlStr)+
+                                $articleContainer.html(htmlStr)
+                            }
+                        })
+                    }
                 }
-            })
-        }
-        get_data_show()
+        // 显示文章列表
+
+        article_list.article_list_first(function (res) {
+            console.log(res);
+            // 4.  渲染数据
+            if (res.code === 200) {
+                // 使用模板引擎技术，渲染数据
+                // var htmlStr = template(id，res)
+                var htmlStr = template($temp_table, res)
+                // console.log(htmlStr)
+                $articleContainer.html(htmlStr)
+            }
+        })
+
+
         //分页插件(存在问题)
         // 保存当前要查询的页数
+
+
+
+
         var curPage;
 
-        function fenye() {
-            $('#pagination-demo').twbsPagination({
-                totalPages: 46, // 总页数
+        $('#pagination-demo').twbsPagination({
+            totalPages: 46, // 总页数
 
-                visiblePages: 6, // 可见页数
-                first: '首页',
-                prev: '上一页',
-                next: '下一页',
-                last: '尾页',
-                onPageClick: function (event, page) {
-                    // alert(page);
-                    // 把page的值给curPage 分页任务结束 请求数据开始
-                    curPage = page;
-                    // alert(curPage);
+            visiblePages: 6, // 可见页数
+            first: '首页',
+            prev: '上一页',
+            next: '下一页',
+            last: '尾页',
+            onPageClick: function (event, page) {
+                // alert(page);
+                // 把page的值给curPage 分页任务结束 请求数据开始
+                curPage = page;
+                // alert(curPage);
 
-                    // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
-                    $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
-                        // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
-                        res.totalPages = curPage;
+                // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
 
-                        curTotalPage =  res.totalPages
-                        // console.log(res.totalPages);0
-                        console.log(res.data);
-
-                        // 4.  渲染数据·
-                        if (res.code === 200) {
-                            // 使用模板引擎技术，渲染数据
-                            // var htmlStr = template(id，res)
-                            var htmlStr = template($temp_table, res)
-                            // console.log(htmlStr)+
-                            $articleContainer.html(htmlStr)
-                        }
-                    })
-
-                }
-            });
-        }
-        fenye()
+               
+                article_re.article_li(curPage )
+            }
 
 
 
+
+
+        });
+
+
+
+
+
+       
     </script>
 
     <script>
@@ -418,7 +433,7 @@
             // console.log(htmlStr);
             $('#selCategory').html(htmlStr);
         })
-    
+
 
 
 
@@ -438,7 +453,7 @@
                 alert('您的输入为空请重新输入')
             } else {
                 // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有符合要求的数据：
-                $.get('http://localhost:8000/admin/search', { type: type ,}, function (res) {
+                $.get('http://localhost:8000/admin/search', { type: type, }, function (res) {
                     // console.log(res);
                     totalPage = res.totalPage;
                     console.log(totalPage);
@@ -463,8 +478,8 @@
                     $('#pagination-demo').twbsPagination({
                         totalPages: totalPage, // 当前总页数
 
-                        
-                        
+
+
 
                         visiblePages: 6, // 可见页数
                         first: '首页',
@@ -473,16 +488,16 @@
                         last: '尾页',
                         onPageClick: function (event, page) {
                             // alert(page);
-                        // //     // 把page的值给curPage 分页任务结束 请求数据开始
-                        curPage = page;
-                            console.log( totalPages);
+                            // //     // 把page的值给curPage 分页任务结束 请求数据开始
+                            curPage = page;
+                            console.log(totalPages);
 
-                        // //     // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page    先拿回所有符合要求的数据：
-                            $.get('http://localhost:8000/admin/search', { totalPages: totalPages, page: curPage ,type: type}, function (res) {
-                        // //         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+                            // //     // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page    先拿回所有符合要求的数据：
+                            $.get('http://localhost:8000/admin/search', { totalPages: totalPages, page: curPage, type: type }, function (res) {
+                                // //         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
                                 console.log(res);
 
-                        // //         // 4.  渲染数据·
+                                // //         // 4.  渲染数据·
                                 if (res.code === 200) {
                                     // 使用模板引擎技术，渲染数据
                                     // var htmlStr = template(id，res)
