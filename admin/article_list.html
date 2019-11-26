@@ -351,6 +351,8 @@
                     $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
                         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
                         res.totalPages = curPage;
+
+                        curTotalPage =  res.totalPages
                         // console.log(res.totalPages);0
                         console.log(res.data);
 
@@ -406,6 +408,12 @@
     <!-- 定义模板 -->
 
     <script>
+        // 全局变量 
+        var curPage = ''; // 表示当前要展示第几页
+        var type = ''; // 表示文章的类型
+        var state = ''; // 表示文章的状态
+
+        var curTotalPage = ''; // 表示当前查询总页数
         // 1.局部更新下拉框
         // 发请求先把下拉框分类数据拿回来渲染在页面中
         $.get('http://localhost:8000/admin/category_search', function (res) {
@@ -440,20 +448,34 @@
             if (type === "" || state === "") {
                 alert('您的输入为空请重新输入')
             } else {
-                // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有符合要求的数据
+                // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有符合要求的数据：
                 $.get('http://localhost:8000/admin/search', { type: type }, function (res) {
-                    console.log(res);
+                    // console.log(res);
                     totalPage = res.totalPage;
-                    // 对所有符合要求的数据在页面局部更新
+                    console.log(totalPage);
+
+                    // 对所有符合要求的数据在页面局部更新:点击筛选把分页销毁  让分页不能再点击
                     // 使用模板引擎技术，渲染数据
                     // var htmlStr = template(id，res)
                     var htmlStr = template($temp_table, res)
                     $articleContainer.html(htmlStr)
 
-
+                    // 解决前后总页面不一样的方法：销毁分页重新再做一个分页
+                    if (curTotalPage != res.totalPage) {
+                        console.log('前后两次查询结果得到的总页数不相同')
+                        console.log(curTotalPage, res.totalPage)
+                        // 由于插件对总页数的变化不敏感，所以如果总页数不同，则要
+                        // 先销毁，再创建
+                        // 参考：http://josecebe.github.io/twbs-pagination/
+                        $('#pagination-demo').twbsPagination('destroy');
+                        totalPages = res.totalPage
+                    }
                     // 对目标数据进行分页
                     $('#pagination-demo').twbsPagination({
                         totalPages: totalPage, // 当前总页数
+
+                        
+                        
 
                         visiblePages: 6, // 可见页数
                         first: '首页',
@@ -461,19 +483,17 @@
                         next: '下一页',
                         last: '尾页',
                         onPageClick: function (event, page) {
-                            // alert(page);
-                            // 把page的值给curPage 分页任务结束 请求数据开始
-                            curPage = page;
-                            // alert(curPage);
+                            alert(page);
+                        // //     // 把page的值给curPage 分页任务结束 请求数据开始
+                        curPage = page;
+                            console.log( totalPages);
 
-                            // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
-                            $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
-                                // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
-                                res.totalPages = curPage;
-                                // console.log(res.totalPages);0
-                                console.log(res.data);
+                        // //     // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page    先拿回所有符合要求的数据：
+                            $.get('http://localhost:8000/admin/search', { totalPages: totalPages, page: curPage ,type: type}, function (res) {
+                        // //         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+                                console.log(res);
 
-                                // 4.  渲染数据·
+                        // //         // 4.  渲染数据·
                                 if (res.code === 200) {
                                     // 使用模板引擎技术，渲染数据
                                     // var htmlStr = template(id，res)
