@@ -27,7 +27,10 @@ var article = {
 
 // article_list页面接口
 var article_url = {
-    admin_search : 'admin/search ' ,
+    admin_search : post_url +'admin/search ' ,
+    article_search:post_url +'admin/search',
+    article_delete:post_url +'article_delete',
+    category_search:post_url +'admin/category_search',
 }
 
 // article_category.html页面接口

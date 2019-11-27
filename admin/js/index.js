@@ -23,7 +23,7 @@ user.getUser(function (res) {
     }
 });
 
-// 文章搜索
+// 文章搜索(没做好)
 var key,type,state,page,perpage,id;
 $search.click(function () { 
     var va = $ipt.val().trim();

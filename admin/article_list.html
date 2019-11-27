@@ -303,32 +303,12 @@
 
     <!-- 定义筛选模板结束 -->
     <script src="./js/utils/config.js"></script>
-    <script src="./js/utils/article.js"></script>
+    <script src="./js/utils/article_list.js"></script>
     <script src="./js/utils/getElement.js"></script>
     <!-- 引入插件js -->
     <script src="./js/jquery.twbsPagination.js"></script>
     <script>
-         var article_re = {
-                    article_li: function ( curPage) {
-                        $.get('http://localhost:8000/admin/search', { totalPages: curPage, page: curPage }, function (res) {
-                            // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
-                            res.totalPages = curPage;
-
-                            curTotalPage = res.totalPages
-                            // console.log(res.totalPages);0
-                            console.log(res.data);
-
-                            // 4.  渲染数据·
-                            if (res.code === 200) {
-                                // 使用模板引擎技术，渲染数据
-                                // var htmlStr = template(id，res)
-                                var htmlStr = template($temp_table, res)
-                                // console.log(htmlStr)+
-                                $articleContainer.html(htmlStr)
-                            }
-                        })
-                    }
-                }
+      
         // 显示文章列表
 
         article_list.article_list_first(function (res) {
@@ -368,8 +348,24 @@
 
                 // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page
 
-               
-                article_re.article_li(curPage )
+
+                article_list.article_li(curPage,function (res) {
+            // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+            res.totalPages = curPage;
+
+            curTotalPage = res.totalPages
+            // console.log(res.totalPages);0
+            console.log(res.data);
+
+            // 4.  渲染数据·
+            if (res.code === 200) {
+                // 使用模板引擎技术，渲染数据
+                // var htmlStr = template(id，res)
+                var htmlStr = template($temp_table, res)
+                // console.log(htmlStr)+
+                $articleContainer.html(htmlStr)
+            }
+        })
             }
 
 
@@ -382,10 +378,11 @@
 
 
 
-       
+
     </script>
 
     <script>
+
         // <!-- 删除功能 -->
         // jquery事件委托
         // $(父元素id).on('click','.子元素类名', function(){  }
@@ -400,7 +397,7 @@
             // 去调用 article.js中的方法，去做删除
             console.log(id);
 
-            $.get('http://localhost:8000/admin/article_delete', { 'id': id }, function (res) {
+            article_list.article_delete(id, function (res) {
                 console.log(res);
                 if (res.code === 200) {
                     var this_element = $(this).parents('tr').remove()
@@ -426,15 +423,15 @@
         var curTotalPage = ''; // 表示当前查询总页数
         // 1.局部更新下拉框
         // 发请求先把下拉框分类数据拿回来渲染在页面中
-        $.get('http://localhost:8000/admin/category_search', function (res) {
+     
+
+       article_list.requery_da(function (res) {
             console.log(res);
             //  使用模板引擎渲染数据
             var htmlStr = template('temp_cate', res);
             // console.log(htmlStr);
             $('#selCategory').html(htmlStr);
         })
-
-
 
 
 
@@ -453,65 +450,66 @@
                 alert('您的输入为空请重新输入')
             } else {
                 // 2. 重发请求:拉取回来的数据就是目标页面的数据  先拿回所有符合要求的数据：
-                $.get('http://localhost:8000/admin/search', { type: type, }, function (res) {
-                    // console.log(res);
-                    totalPage = res.totalPage;
-                    console.log(totalPage);
-
-                    // 对所有符合要求的数据在页面局部更新:点击筛选把分页销毁  让分页不能再点击
-                    // 使用模板引擎技术，渲染数据
-                    // var htmlStr = template(id，res)
-                    var htmlStr = template($temp_table, res)
-                    $articleContainer.html(htmlStr)
-
-                    // 解决前后总页面不一样的方法：销毁分页重新再做一个分页
-                    if (curTotalPage != res.totalPage) {
-                        console.log('前后两次查询结果得到的总页数不相同')
-                        console.log(curTotalPage, res.totalPage)
-                        // 由于插件对总页数的变化不敏感，所以如果总页数不同，则要
-                        // 先销毁，再创建
-                        // 参考：http://josecebe.github.io/twbs-pagination/
-                        $('#pagination-demo').twbsPagination('destroy');
-                        totalPages = res.totalPage
-                    }
-                    // 对目标数据进行分页
-                    $('#pagination-demo').twbsPagination({
-                        totalPages: totalPage, // 当前总页数
-
-
-
-
-                        visiblePages: 6, // 可见页数
-                        first: '首页',
-                        prev: '上一页',
-                        next: '下一页',
-                        last: '尾页',
-                        onPageClick: function (event, page) {
-                            // alert(page);
-                            // //     // 把page的值给curPage 分页任务结束 请求数据开始
-                            curPage = page;
-                            console.log(totalPages);
-
-                            // //     // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page    先拿回所有符合要求的数据：
-                            $.get('http://localhost:8000/admin/search', { totalPages: totalPages, page: curPage, type: type }, function (res) {
-                                // //         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
-                                console.log(res);
-
-                                // //         // 4.  渲染数据·
-                                if (res.code === 200) {
-                                    // 使用模板引擎技术，渲染数据
-                                    // var htmlStr = template(id，res)
-                                    var htmlStr = template($temp_table, res)
-                                    // console.log(htmlStr)+
-                                    $articleContainer.html(htmlStr)
-                                }
-                            })
-
-                        }
-                    });
-                })
+              
+              
+               article_list.re_qu_data(type,function (res) {
+            // console.log(res);
+            totalPage = res.totalPage;
+            console.log(totalPage);
+    
+            // 对所有符合要求的数据在页面局部更新:点击筛选把分页销毁  让分页不能再点击
+            // 使用模板引擎技术，渲染数据
+            // var htmlStr = template(id，res)
+            var htmlStr = template($temp_table, res)
+            $articleContainer.html(htmlStr)
+    
+            // 解决前后总页面不一样的方法：销毁分页重新再做一个分页
+            if (curTotalPage != res.totalPage) {
+                console.log('前后两次查询结果得到的总页数不相同')
+                console.log(curTotalPage, res.totalPage)
+                // 由于插件对总页数的变化不敏感，所以如果总页数不同，则要
+                // 先销毁，再创建
+                // 参考：http://josecebe.github.io/twbs-pagination/
+                $('#pagination-demo').twbsPagination('destroy');
+                totalPages = res.totalPage
             }
+            // 对目标数据进行分页
+            $('#pagination-demo').twbsPagination({
+                totalPages: totalPage, // 当前总页数
+    
+    
+    
+    
+                visiblePages: 6, // 可见页数
+                first: '首页',
+                prev: '上一页',
+                next: '下一页',
+                last: '尾页',
+                onPageClick: function (event, page) {
+                    // alert(page);
+                    // //     // 把page的值给curPage 分页任务结束 请求数据开始
+                    curPage = page;
+                    console.log(totalPages);
+    
+                    // //     // 请求数据  // 根据接口的定义，要请哪一页的数据，就传对应的值给page    先拿回所有符合要求的数据：
+                   article_list.requery_page(totalPages,curPage,type,function (res) {
+            // //         // 问题：请求回来的数据没有更新:用着人家的服务器 不看接口文档
+            console.log(res);
 
+            // //         // 4.  渲染数据·
+            if (res.code === 200) {
+                // 使用模板引擎技术，渲染数据
+                // var htmlStr = template(id，res)
+                var htmlStr = template($temp_table, res)
+                // console.log(htmlStr)+
+                $articleContainer.html(htmlStr)
+            }
+        })
+    
+                }
+            });
+    })
+            }
 
 
         })
@@ -527,15 +525,23 @@
             // }
             // 从dom中取出自定义 属性
             var id = $(this).attr('data-id')
-            $.get('http://localhost:8000/admin/search', { id: id }, function (res) {
-                console.log(res.data.id);
-                //   console.log('页面跳转');
-                location.href = `article_edit.html?id=${id}`;
-            })
+           article_list.get_location(id,function (res) {
+            console.log(res.data.id);
+              console.log('页面跳转');
+            location.href = `article_edit.html?id=${id}`;
+        })
+        
 
 
         });
 
+
+
+
+
+
+
+     
     </script>
 
 
