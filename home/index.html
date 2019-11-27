@@ -220,8 +220,13 @@
         <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
         <p>电话：0755-****888    粤ICP备*******8号</p>
     </div>
+    <script src="./js/jquery-1.12.4.min.js"></script>
 <script>
-
+// 发请求显示页面内容
+$.get('http://localhost:8000/search',function(res){
+    console.log(res);
+    
+})
 </script>
 </body>
 

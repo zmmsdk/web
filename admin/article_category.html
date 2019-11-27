@@ -130,20 +130,23 @@
 
 
   </script>
+  <script src="./js/utils/config.js"></script>
   <script src="./js/category.js"></script>
 
   <!-- 1.拉取数据局部更新 -->
   <script>
-    $.get('http://localhost:8000/admin/category_search', function (res) {
-      console.log(res);
-      //4. 使用模板引擎技术，渲染数据
-      {  // var htmlStr = template(id，res)
-        var htmlStr = template('temp_insert', res)
-        // console.log(htmlStr)+
-        $('#article_cate').html(htmlStr)
-      }
-
-    })
+  
+   cate_show.data_show(function (res) {
+        console.log(res);
+        //4. 使用模板引擎技术，渲染数据
+          // var htmlStr = template(id，res)
+          var htmlStr = template('temp_insert', res)
+          // console.log(htmlStr)+
+          $('#article_cate').html(htmlStr)
+        
+    
+      })
+  
   </script>
   <!-- 2.引入模板引擎文件 -->
   <script src="./js/template-web.js"></script>
@@ -175,9 +178,9 @@
       // alert('您确定要新增么');
       $('#addModal').modal('hide');
       // 发请求更新分类
-      $.post('http://localhost:8000/admin/category_add', { name: recipient_name, slug: recipient_other_name }, function (res) {
+      cate_show.requery(recipient_name,recipient_other_name,function (res) {
         console.log(res);
-      });
+      })
 
     });
 //  $.ajax({
@@ -245,11 +248,11 @@
 
       // 修改成功
       // 1. 重新请求，更新页面
-      $.post('http://localhost:8000/admin/category_edit', { id: id, name: name, slug: slug }, function (res) {
+     cate_show.cate_edit(id, name, slug,function (res) {
         if (res.code === 200) {
           console.log(res);
         }
-      });
+      })
       // 2. 隐藏模态框
       $('#editModal').modal('hide');
 
@@ -260,6 +263,7 @@
   <!-- 编辑保存结束 -->
   <!-- 删除功能开始 -->
   <script>
+   
     // 删除
     // $(容器).on(事件名， 委托人，回调)
     $('#article_cate').on('click', '.del', function () {
@@ -270,7 +274,8 @@
       // 获取自定义属性
       var id = $(this).attr('data-id')
       console.log(id);
-      $.post('http://localhost:8000/admin/category_delete', { id: id }, function (res) {
+     
+      cate_show.cate_delete(id,function (res) {
         console.log(res);
         if (res.code === 200) {
           // 删除成功
@@ -278,22 +283,21 @@
           //    方法一，不使用。
           //    用第二种方法
           // 2. 重新获取数据
-          $.get('http://localhost:8000/admin/category_search', function (res) {
-            console.log(res);
-            //4. 使用模板引擎技术，渲染数据
-            {  // var htmlStr = template(id，res)
-              var htmlStr = template('temp_insert', res)
-              // console.log(htmlStr)+
-              $('#article_cate').html(htmlStr)
-            }
-
-          })
-
+         cate_show.re_data(function (res) {
+          console.log(res);
+          //4. 使用模板引擎技术，渲染数据
+          {  // var htmlStr = template(id，res)
+            var htmlStr = template('temp_insert', res)
+            // console.log(htmlStr)+
+            $('#article_cate').html(htmlStr)
+          }
+  
+        })
+    
         } else {
           alert(res.msg)
         }
-      })
-
+  })
 
     })
 

@@ -29,3 +29,12 @@ var article = {
 var article_url = {
     admin_search : 'admin/search ' ,
 }
+
+// article_category.html页面接口
+var category = {
+    cata_url:post_url +'admin/category_search',
+    requery:post_url +'admin/category_add',
+    cate_edit:post_url +'admin/category_edit',
+    cate_delete:post_url +'admin/category_delete',
+    re_data:post_url +'admin/category_search',
+}
