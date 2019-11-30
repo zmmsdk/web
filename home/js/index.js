@@ -16,11 +16,5 @@ var index_search={
             
         })
     },
-    article_paihang:(callback) =>{
-        $.get(APIURLS.article_pai,
-            
-            function(res){
-            callback(res)
-        })
-    },
+  
 }

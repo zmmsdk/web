@@ -46,28 +46,13 @@
     </div>
 
     <div class="main_con clearfix">
-        <div class="left_con">
+        <div class="left_con" id="left_con">
             <ul class="focus_list" id="focus_list">
-                <li class="first">
+                <!-- <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
                     <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic02.jpg" alt=""></a>
-                    <p>图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic03.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic05.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
-                <li>
-                    <a href="#"><img src="images/pic06.jpg" alt=""></a>
-                    <p>图片说明</p>
-                </li>
+                </li> -->
+
             </ul>
 
             <div class="common_title">
@@ -75,7 +60,8 @@
                 <a href="#" class="more"><i class="fa fa-angle-double-right"></i></a>
             </div>
 
-            <div class="common_news_list">
+           <div class="new" id="new">
+            <!-- <div class="common_news_list" id="common_news_list">
                 <a href="#" class="list_pic"><img src="images/pic09.jpg" alt=""></a>
                 <h4><a href="#">亚马逊金融试水中国？背后却是和华尔街的“金融战争” </a></h4>
                 <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
@@ -85,9 +71,10 @@
                         )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( 10 )</span>
                     <b>发布于 2018-08-30 12:18:58</b>
                 </div>
-            </div>
+            </div> -->
+           </div>
 
-            <div class="common_news_list">
+            <!-- <div class="common_news_list">
                 <a href="#" class="list_pic"><img src="images/pic03.jpg" alt=""></a>
                 <h4><a href="#">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱,马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</a></h4>
                 <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
@@ -133,7 +120,7 @@
                         )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( 10 )</span>
                     <b>发布于 2018-08-30 12:18:58</b>
                 </div>
-            </div>
+            </div> -->
 
         </div>
         <div class="right_con">
@@ -242,6 +229,23 @@
             {{/if}}
         {{/each}}
     </script>
+    <!-- 最新资讯! --> 
+    <script  id="temp_new" type="text/html">
+    {{each data item}}
+    <div class="common_news_list">
+        <a href="#" class="list_pic"><img src="{{item.cover}}" alt=""></a>
+        <h4><a href="#">{{item.title}} </a></h4>
+        <p>{{item.content}}
+        </p>
+        <div class="new_info">
+            <span>标签：{{item.type}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( {{item.comment}}
+                )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( {{item.read}} )</span>
+            <b>发布于 {{item.date}}</b>
+        </div>
+    </div>
+
+    {{/each}}
+</script>
     <script>
         // 发请求显示页面内容
         index_search.in_search(function (res) {
@@ -254,6 +258,11 @@
 
             // console.log(htmlStr);
             $("#focus_list").html(htmlStr)
+
+             // 最新资讯
+             var htmlStr = template('temp_new', res)
+            console.log(htmlStr);
+            $('#new').html(htmlStr)
 
         })
 
@@ -268,12 +277,12 @@
             $('#left_menu').html(htmlStr)
 
 
+           
+            
+
         })
 
-        index_search.article_paihang(function(res){
-            console.log(res);
-            
-        })
+      
     </script>
 </body>
 
