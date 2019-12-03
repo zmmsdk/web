@@ -177,13 +177,14 @@
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/utils/config.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="./js/utils/index.js"></script>
     <script src="./js/template-web.js"></script>
     <!-- 引入day.js -->
     <script src="./js/dayjs/dayjs.min.js"></script>
     <script src="./js/dayjs/zh_cn.js"></script>
     <script src="./js/dayjs/relative.min.js"></script>
     <script type="text/html" id="temp_category_search">
+   
         <!-- data:数组对象  item：数组每一项 -->
     {{each data item}}
     <li><a href="#">{{item.name}}</a></li>
@@ -252,60 +253,9 @@
         console.log( dayjs(1574590762413).toNow() )
     
     </script>
+     <script src="./js/index.js"></script>
     <script>
-        // 发请求显示页面内容
-        index_search.in_search(function (res) {
-            // console.log(11)
-            console.log(res);
-            // res = html(res)
-
-           // 使用模板引擎 
-           var htmlStr = template("temp_foucs",res)
-
-            // console.log(htmlStr);
-            $("#focus_list").html(htmlStr)
-
-             // 最新资讯
-             var htmlStr = template('temp_new', res)
-            console.log(htmlStr);
-            $('#new').html(htmlStr)
-
-        })
-
-
-        index_search.category_show( function (res) {
-            console.log(res);
-            // var strHtml = template('模板id',res)
-            var htmlStr = template('temp_category_search', res)
-            // console.log(htmlStr)
-            $('#level_two').html('    <li class="up"></li>' + htmlStr)
-
-            $('#left_menu').html(htmlStr)
-        })
-
-
-        // 文章热门排行
-        index_search.in_rank( function (res) {
-            console.log(res);
-            // var strHtml = template('模板id',res)
-            var htmlStr = template('temp_hot', res)
-            // console.log(htmlStr)
-         
-
-            $('#content_list').html(htmlStr)
-        })
-
-
-        // 最新评论
-        index_search.latest_com( function (res) {
-            console.log(res);
-            // var strHtml = template('模板id',res)
-            var htmlStr = template('temp_com', res)
-            console.log(htmlStr)
-         
-
-            $('#comment_list ').html(htmlStr)
-        })
+      
 
       
     </script>
