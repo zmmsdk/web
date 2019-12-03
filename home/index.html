@@ -126,7 +126,7 @@
         <div class="right_con">
             <div class="common_wrap">
                 <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-                <ul class="content_list">
+                <ul class="content_list" id="content_list">
                     <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
@@ -138,42 +138,18 @@
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-commenting-o"></i> 最新评论</h3>
-                <ul class="content_list comment_list">
-                    <li>
+                <ul class="content_list comment_list" id="comment_list">
+                    <!-- <li>
                         <span>山</span>
                         <b><em>山治</em> 9个月前(08-14)说:</b>
                         <strong>挺会玩的</strong>
-                    </li>
-                    <li>
-                        <span>丽</span>
-                        <b><em>丽丽</em> 9个月前(08-14)说:9个月前(08-14)说:9个月前(08-14)说:</b>
-                        <strong>挺会玩的挺会玩的挺会玩的挺会玩的</strong>
-                    </li>
-                    <li>
-                        <span>R</span>
-                        <b><em>Rechael</em> 9个月前(08-14)说:</b>
-                        <strong>挺会玩的</strong>
-                    </li>
-                    <li>
-                        <span>J</span>
-                        <b><em>John</em> 9个月前(08-14)说:</b>
-                        <strong>挺会玩的</strong>
-                    </li>
-                    <li>
-                        <span>段</span>
-                        <b><em>段正淳</em> 9个月前(08-14)说:</b>
-                        <strong>挺会玩的</strong>
-                    </li>
-                    <li>
-                        <span>乔</span>
-                        <b><em>乔峰</em> 9个月前(08-14)说:</b>
-                        <strong>挺会玩的</strong>
-                    </li>
+                    </li> -->
+                   
                 </ul>
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-bullseye"></i> 焦点关注</h3>
-                <ul class="content_list guanzhu_list">
+                <ul class="content_list guanzhu_list" id="content_list guanzhu_list              ">
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
@@ -203,6 +179,10 @@
     <script src="./js/utils/config.js"></script>
     <script src="./js/index.js"></script>
     <script src="./js/template-web.js"></script>
+    <!-- 引入day.js -->
+    <script src="./js/dayjs/dayjs.min.js"></script>
+    <script src="./js/dayjs/zh_cn.js"></script>
+    <script src="./js/dayjs/relative.min.js"></script>
     <script type="text/html" id="temp_category_search">
         <!-- data:数组对象  item：数组每一项 -->
     {{each data item}}
@@ -246,12 +226,38 @@
 
     {{/each}}
 </script>
+<!-- 文章热门排行模板 -->
+<script id="temp_hot" type="text/html">
+{{each data item}}
+<li><span>{{$}}</span><a href="#">{{item.title}}</a></li>
+{{/each}}
+</script>
+<!-- 最新评论模板 -->
+<script id="temp_com" type="text/html">
+    {{each data item}}
+    <li>
+        <span></span>
+        <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
+        <strong>{{item.content}}</strong>
+    </li>
+    {{/each}}
+    </script>
+    <script>
+        dayjs.locale('zh-cn') ; // 全局设置，中文
+        
+        // 应用插件
+        //  格式：dayjs.extend(dayjs_plugin_插件名);
+        dayjs.extend(dayjs_plugin_relativeTime);
+        console.log( dayjs().add(10,'day').format("YYYY-MM-DD dddd") )
+        console.log( dayjs(1574590762413).toNow() )
+    
+    </script>
     <script>
         // 发请求显示页面内容
         index_search.in_search(function (res) {
             // console.log(11)
             console.log(res);
-            
+            // res = html(res)
 
            // 使用模板引擎 
            var htmlStr = template("temp_foucs",res)
@@ -275,11 +281,30 @@
             $('#level_two').html('    <li class="up"></li>' + htmlStr)
 
             $('#left_menu').html(htmlStr)
+        })
 
 
-           
-            
+        // 文章热门排行
+        index_search.in_rank( function (res) {
+            console.log(res);
+            // var strHtml = template('模板id',res)
+            var htmlStr = template('temp_hot', res)
+            // console.log(htmlStr)
+         
 
+            $('#content_list').html(htmlStr)
+        })
+
+
+        // 最新评论
+        index_search.latest_com( function (res) {
+            console.log(res);
+            // var strHtml = template('模板id',res)
+            var htmlStr = template('temp_com', res)
+            console.log(htmlStr)
+         
+
+            $('#comment_list ').html(htmlStr)
         })
 
       

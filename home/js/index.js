@@ -16,5 +16,20 @@ var index_search={
             
         })
     },
+    in_rank:callback =>{
+        $.get( APIURLS.rank,{
+            perpage: 5,
+            state: '已发布'
+        },res=>{
+           callback(res)
+            
+        })
+    },
+    latest_com:callback =>{
+        $.get( APIURLS.latest_comment,res=>{
+           callback(res)
+            
+        })
+    },
   
 }
