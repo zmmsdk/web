@@ -17,5 +17,9 @@ var APIURLS = {
     rank:baseUrl + 'rank',
     // 最新评论
     latest_comment:baseUrl + 'latest_comment',
+    // 发表评论
+    sub_comment:baseUrl + 'post_comment',
+    // 评论列表
+    li_comment:baseUrl + 'get_comments',
  
  }

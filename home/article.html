@@ -80,52 +80,32 @@
                 下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
             </div>
 
-            <form action="" class="comment_form">
+            <form action="" class="comment_form" id="comment_form">
                 <div class="form_group">
                     <label>用户名：</label>
-                    <input type="text" placeholder="请输入用户名" class="comment_name">
+                    <input type="text" placeholder="请输入用户名" class="comment_name" id="comment_name">
                 </div>
                 <div class="form_group">
                     <label>评论内容：</label>
-                    <textarea placeholder="请发表您的评论" class="comment_input"></textarea>
+                    <textarea placeholder="请发表您的评论" class="comment_input" id="comment_input"></textarea>
                 </div>
                 <div class="form_group">
-                    <input type="submit" name="" value="评 论" class="comment_sub"></div>
+                    <input type="button" name="" value="评 论" class="comment_sub" id="comment_sub"></div>
             </form>
 
             <div class="comment_count">
                 4条评论
             </div>
 
-            <div class="comment_list_con">
-                <div class="comment_detail_list">
+            <div class="comment_list_con" id="messages">
+                <!-- <div class="comment_detail_list">
                     <div class="person_pic fl">乔</div>
                     <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
                     <div class="comment_text fl">
                         遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
                     </div>
                 </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">段</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">虚</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
-                <div class="comment_detail_list">
-                    <div class="person_pic fl">王</div>
-                    <div class="name_time fl"><b>虚竹</b><span>4小时前</span></div>
-                    <div class="comment_text fl">
-                        遏制茅台酒价格过快上涨，多渠道供给，就不一定要买，租茅台酒也可以的，租售同权。开发共有产权茅台酒，让老百姓喝得起茅台酒，饮者有其酒。
-                    </div>
-                </div>
+                -->
             </div>
         </div>
         <div class="right_con setfl">
@@ -206,6 +186,69 @@
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/article.js"></script>
+    <script src="./js/template-web.js"></script>
+    <script id="temp_commentlist" type="text/html">
+    {{each data item}}
+        <div class="comment_detail_list">
+            <div class="person_pic fl">段</div>
+            <div class="name_time fl"><b>{{item.name}}</b><span>4小时前</span></div>
+            <div class="comment_text fl">
+                {{item.content}}
+            </div>
+        </div>
+    {{/each}}
+    </script>
+
+   <script>
+   
+   $('#comment_sub').click(function () {
+        console.log('点击事件添加成功');
+        var comment_name = $('#comment_name').val().trim()
+        var comment_input = $('#comment_input').val().trim()
+  
+        if (comment_name === '' || comment_input === '') {
+          alert('输入不能为空')
+          return
+        } else {
+  
+            // 发表评论
+            article_search.sub(comment_name, comment_input,function (res) {
+            console.log(res);
+            console.log(456);
+            // 根据返回结果进行后续的处理
+            //（1） 清空留言区域
+            $('#comment_name').val('')
+            $('#comment_input').val('')
+            console.log(comment_name, comment_input);
+            // (2)
+            // getmsg()
+          })
+        
+        }
+      })
+
+
+      article_search.comment_li(function (res) {
+        console.log(res);
+        // 翻转数组获取最新评论
+         res.data.reverse()
+
+
+        // 清除之前的留言内容
+
+        $('#messages').empty()
+        // 模板引擎渲染数据
+        var strHtml = template('temp_commentlist',res)
+        // console.log(strHtml);
+        // 追加到页面
+        $('#messages').append(strHtml)
+
+        
+      })
+
+ 
+   </script>
 </body>
 
 </html>
