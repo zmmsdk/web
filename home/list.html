@@ -31,7 +31,7 @@
         <div class="menu">
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
-                <ul class="level_two">
+                <ul class="level_two" id="level_two">
                     <li class="up"></li>
                     <li><a href="#">最 新</a></li>
                     <li><a href="#">科 技</a></li>
@@ -41,7 +41,7 @@
                     <li><a href="#">公 司</a></li>
                 </ul>
             </div>
-            <ul class="left_menu fl">
+            <ul class="left_menu fl" id="left_menu">
                 <li><a href="#">最 新</a></li>
                 <li><a href="#">科 技</a></li>
                 <li><a href="#">股 市</a></li>
@@ -57,7 +57,7 @@
     </div>
 
     <div class="main_con clearfix">
-        <div class="left_con setfr">
+        <div class="left_con setfr" id="left_con">
 
             <div class="list_title">
                 <h3>科 技</h3>
@@ -136,7 +136,7 @@
             </div>
 
             <div id="pagination" class="page"></div>
-            <script>
+            <!-- <script>
                 $(function() {
                     $("#pagination").pagination({
                         currentPage: 2,
@@ -146,13 +146,13 @@
                         }
                     });
                 });
-            </script>
+            </script> -->
 
         </div>
         <div class="right_con setfl">
             <div class="common_wrap">
                 <h3><i class="fa fa-bar-chart"></i> 一周热门排行</h3>
-                <ul class="content_list">
+                <ul class="content_list" id="content_list">
                     <li><span class="first">1</span><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
                     <li><span class="second">2</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><span class="third">3</span><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
@@ -164,7 +164,7 @@
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-commenting-o"></i> 最新评论</h3>
-                <ul class="content_list comment_list">
+                <ul class="content_list comment_list" id="content_list comment_list">
                     <li>
                         <span>山</span>
                         <b><em>山治</em> 9个月前(08-14)说:</b>
@@ -227,6 +227,100 @@
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/article.js"></script>
+    <script src="./js/template-web.js"></script>
+
+    <script src="./js/utils/index.js"></script>
+    <script src="./js/index.js"></script>
+
+    <script type="text/html" id="temp_category_search">
+
+        <!-- data:数组对象  item：数组每一项 -->
+    {{each data item}}
+    <li><a href="#">{{item.name}}</a></li>
+
+    {{/each}}
+    </script>
+    <!--模板引擎中if的用法-->
+    <!-- // 如果是第一张，则要加上class="first" -->
+    <!-- 如果是第一张图，则要给一个特殊的class -->
+    <!-- 通过 idx来判断是否是第一张 -->
+    <script id="temp_foucs" type="text/html">
+        {{each data item idx}}
+            {{if idx == 0}}
+                <li class="first">
+                    <a href="#"><img src="{{item.cover}}" alt="{{item.title}}"></a>
+                    <p>{{item.title}}</p>
+                </li>
+            {{else}}
+                <li>
+                    <a href="#"><img src="{{item.cover}}" alt="{{item.title}}"></a>
+                    <p>{{item.title}}</p>
+                </li>
+            {{/if}}
+        {{/each}}
+    </script>
+    <script id="temp_commentlist" type="text/html">
+    {{each data item}}
+        <div class="comment_detail_list">
+            <div class="person_pic fl">段</div>
+            <div class="name_time fl"><b>{{item.name}}</b><span>4小时前</span></div>
+            <div class="comment_text fl">
+                {{item.content}}
+            </div>
+        </div>
+    {{/each}}
+    </script>
+    <!-- 文章热门排行模板 -->
+    <script id="temp_hot" type="text/html">
+    {{each data item}}
+    <li><span>{{$}}</span><a href="#">{{item.title}}</a></li>
+    {{/each}}
+    </script>
+    <!-- 最新评论模板 -->
+    <script id="temp_com" type="text/html">
+        {{each data item}}
+        <li>
+            <span></span>
+            <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
+            <strong>{{item.content}}</strong>
+        </li>
+        {{/each}}
+    </script>
+    
+
+    <script>
+        //   分类
+        // 发请求显示页面内容
+        index_search.in_search(function (res) {
+            // console.log(11)
+            console.log(res);
+            // res = html(res)
+
+            // 使用模板引擎 
+            var htmlStr = template("temp_foucs", res)
+
+            // console.log(htmlStr);
+            $("#focus_list").html(htmlStr)
+
+            // // 最新资讯
+            // var htmlStr = template('temp_new', res)
+            // console.log(htmlStr);
+            // $('#new').html(htmlStr)
+
+        })
+
+
+        index_search.category_show(function (res) {
+            console.log(res);
+            // var strHtml = template('模板id',res)
+            var htmlStr = template('temp_category_search', res)
+            // console.log(htmlStr)
+            $('#level_two').html('    <li class="up"></li>' + htmlStr)
+
+            $('#left_menu').html(htmlStr)
+        })
+    </script>
 </body>
 
 </html>

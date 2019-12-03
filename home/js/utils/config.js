@@ -21,5 +21,9 @@ var APIURLS = {
     sub_comment:baseUrl + 'post_comment',
     // 评论列表
     li_comment:baseUrl + 'get_comments',
+
+
+    // 获取文章详情
+    article_detail: baseUrl + 'search',
  
  }

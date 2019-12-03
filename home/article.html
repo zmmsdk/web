@@ -58,10 +58,11 @@
             <div class="breadcrumb">
                 当前位置： <a href="#">首页</a> &gt; <a href="#">科技</a> &gt; 文章详情
             </div>
-            <h3 class="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
-            <div class="article_info">杰克 发布于 2019-05-08 07:08:46&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
-                (98)&nbsp;&nbsp;&nbsp;评论: (0)</div>
-            <div class="article_con">
+            <h3 class="article_title" id="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
+            <div class="article_info"><span id="author">杰克</span> 发布于 <span id="date">2019-05-08
+                    07:08:46</span>&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
+                (<span id="read">98</span>)&nbsp;&nbsp;&nbsp;评论: (0)</div>
+            <div class="article_con" id="article_con">
 
                 <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
 
@@ -188,22 +189,22 @@
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/template-web.js"></script>
-    <script src="./js/utils/config.js"></script>
+
     <script src="./js/utils/index.js"></script>
-    <script src="./js/index.js"></script>
+
     <script type="text/html" id="temp_category_search">
-   
+
         <!-- data:数组对象  item：数组每一项 -->
     {{each data item}}
     <li><a href="#">{{item.name}}</a></li>
 
     {{/each}}
-</script>
+    </script>
     <!--模板引擎中if的用法-->
     <!-- // 如果是第一张，则要加上class="first" -->
     <!-- 如果是第一张图，则要给一个特殊的class -->
     <!-- 通过 idx来判断是否是第一张 -->
-    <script  id="temp_foucs" type="text/html">
+    <script id="temp_foucs" type="text/html">
         {{each data item idx}}
             {{if idx == 0}}
                 <li class="first">
@@ -230,7 +231,7 @@
     {{/each}}
     </script>
     <!-- 文章热门排行模板 -->
-<script id="temp_hot" type="text/html">
+    <script id="temp_hot" type="text/html">
     {{each data item}}
     <li><span>{{$}}</span><a href="#">{{item.title}}</a></li>
     {{/each}}
@@ -244,60 +245,146 @@
             <strong>{{item.content}}</strong>
         </li>
         {{/each}}
-        </script>
+    </script>
+    <!--  文章详情模板 -->
+    <script id="temp_detail" type="text/html">
 
-   <script>
-   
-   $('#comment_sub').click(function () {
-        console.log('点击事件添加成功');
-        var comment_name = $('#comment_name').val().trim()
-        var comment_input = $('#comment_input').val().trim()
-  
-        if (comment_name === '' || comment_input === '') {
-          alert('输入不能为空')
-          return
-        } else {
-  
-            // 发表评论
-            article_search.sub(comment_name, comment_input,function (res) {
+    </script>
+
+    <script>
+        //   分类
+        // 发请求显示页面内容
+        index_search.in_search(function (res) {
+            // console.log(11)
             console.log(res);
-            console.log(456);
-            // 根据返回结果进行后续的处理
-            //（1） 清空留言区域
-            $('#comment_name').val('')
-            $('#comment_input').val('')
-            console.log(comment_name, comment_input);
-            // (2)
-            // getmsg()
-          })
-        
-        }
-      })
+            // res = html(res)
+
+            // 使用模板引擎 
+            var htmlStr = template("temp_foucs", res)
+
+            // console.log(htmlStr);
+            $("#focus_list").html(htmlStr)
+
+            // // 最新资讯
+            // var htmlStr = template('temp_new', res)
+            // console.log(htmlStr);
+            // $('#new').html(htmlStr)
+
+        })
 
 
-      article_search.comment_li(function (res) {
-        console.log(res);
-        // 翻转数组获取最新评论
-        //  console.log(res.data.reverse());
-         res.data.reverse()
-     
-         
+        index_search.category_show(function (res) {
+            console.log(res);
+            // var strHtml = template('模板id',res)
+            var htmlStr = template('temp_category_search', res)
+            // console.log(htmlStr)
+            $('#level_two').html('    <li class="up"></li>' + htmlStr)
+
+            $('#left_menu').html(htmlStr)
+        })
 
 
-        // 清除之前的留言内容
 
-        $('#messages').empty()
-        // 模板引擎渲染数据
-        var strHtml = template('temp_commentlist',res)
-        // console.log(strHtml);
-        // 追加到页面
-        $('#messages').append(strHtml)
 
-        
-      })
 
+        $('#comment_sub').click(function () {
+            console.log('点击事件添加成功');
+            var comment_name = $('#comment_name').val().trim()
+            var comment_input = $('#comment_input').val().trim()
+
+            if (comment_name === '' || comment_input === '') {
+                alert('输入不能为空')
+                return
+            } else {
+
+                // 发表评论
+                article_search.sub(comment_name, comment_input, function (res) {
+                    console.log(res);
+                    console.log(456);
+                    // 根据返回结果进行后续的处理
+                    //（1） 清空留言区域
+                    $('#comment_name').val('')
+                    $('#comment_input').val('')
+                    console.log(comment_name, comment_input);
+                    // (2)
+                    // getmsg()
+                })
+
+            }
+        })
+
+
+        article_search.comment_li(function (res) {
+            console.log(res);
+            // 翻转数组获取最新评论
+            //  console.log(res.data.reverse());
+            res.data.reverse()
+
+
+
+
+            // 清除之前的留言内容
+
+            $('#messages').empty()
+            // 模板引擎渲染数据
+            var strHtml = template('temp_commentlist', res)
+            // console.log(strHtml);
+            // 追加到页面
+            $('#messages').append(strHtml)
+
+
+        })
+
+
+    </script>
+    <script>
+        var id = location.search.substr(4)
+        //    alert(id)
+        article_search.ar_detail(id, function (res) {
+            console.log(res);
+            title = res.data.title;
+            content = res.data.content;
+            author = res.data.author;
+            date = res.data.date;
+            read = res.data.read;
+
+            $('#article_con').html(content)
+            $('#article_title').html(title)
+
+            $('#author').html(author)
+
+            $('#date').html(date)
+
+            $('#read').html(read)
+
+        })
+
+    </script>
+    <script>
+    
+    // 文章热门排行
+index_search.in_rank( function (res) {
+    console.log(res);
+    // var strHtml = template('模板id',res)
+    var htmlStr = template('temp_hot', res)
+    // console.log(htmlStr)
  
-   </script>
+
+    $('#content_list').html(htmlStr)
+})
+
+
+// 最新评论
+index_search.latest_com( function (res) {
+    console.log(res);
+    // var strHtml = template('模板id',res)
+    var htmlStr = template('temp_com', res)
+    console.log(htmlStr)
+ 
+
+    $('#comment_list ').html(htmlStr)
+})
+    </script>
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 var article_search = {
+    
     sub:(comment_name,comment_input ,callback) =>{
         $.post(APIURLS.sub_comment,{ name: comment_name, content:  comment_input },
             
@@ -11,4 +12,16 @@ var article_search = {
             callback(res)
         })
     },
+    ar_detail:(id ,callback) =>{
+        $.get(APIURLS.article_detail,{ id:id, },
+            
+            function(res){
+            callback(res)
+        })
+    },
+
+
+
+    
+
 }

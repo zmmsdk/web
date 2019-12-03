@@ -178,6 +178,7 @@
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/index.js"></script>
+    <script src="./js/utils/common.js"></script>
     <script src="./js/template-web.js"></script>
     <!-- 引入day.js -->
     <script src="./js/dayjs/dayjs.min.js"></script>
@@ -213,10 +214,10 @@
     <!-- 最新资讯! --> 
     <script  id="temp_new" type="text/html">
     {{each data item}}
-    <div class="common_news_list">
-        <a href="#" class="list_pic"><img src="{{item.cover}}" alt=""></a>
-        <h4><a href="#">{{item.title}} </a></h4>
-        <p>{{item.content}}
+    <div class="common_news_list" id = "com{{item.id}}" data-id = "common_news_list">
+        <a href="article.html?id={{item.id}}" target = "_blank" class="list_pic"><img src="{{item.cover}}" alt=""></a>
+        <h4><a href="article.html?id={{item.id}}" target = "_blank">{{item.title}} </a></h4>
+        <p><%=#item.content %>
         </p>
         <div class="new_info">
             <span>标签：{{item.type}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( {{item.comment}}
@@ -256,6 +257,12 @@
      <script src="./js/index.js"></script>
     <script>
       
+// console.log($('common_news_list'));
+// $('common_news_list').click(function(){
+//     console.log(123);
+    
+// })
+
 
       
     </script>
