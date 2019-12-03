@@ -15,8 +15,8 @@
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片">
-            <button class="search_btn"><i class="fa fa-search"></i></button>
+            <input type="text" class="search_txt" placeholder="黑洞照片"  id="value">
+            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
             <a href="#"><i class="fa fa-angle-right"></i>&nbsp;&nbsp;网站地图</a><br>
@@ -29,22 +29,22 @@
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
                 <ul class="level_two" id="level_two">
-                    <li class="up"></li>
+                    <!-- <li class="up"></li>
                     <li><a href="#">最 新</a></li>
                     <li><a href="#">科 技</a></li>
                     <li><a href="#">股 市</a></li>
                     <li><a href="#">商 品</a></li>
                     <li><a href="#">外 汇</a></li>
-                    <li><a href="#">公 司</a></li>
+                    <li><a href="#">公 司</a></li> -->
                 </ul>
             </div>
             <ul class="left_menu fl" id="left_menu">
-                <li><a href="#">最 新</a></li>
+                <!-- <li><a href="#">最 新</a></li>
                 <li><a href="#">科 技</a></li>
                 <li><a href="#">股 市</a></li>
                 <li><a href="#">商 品</a></li>
                 <li><a href="#">外 汇</a></li>
-                <li><a href="#">公 司</a></li>
+                <li><a href="#">公 司</a></li> -->
             </ul>
             <ul class="right_menu fr">
                 <li><a href="#">科技专题</a></li>
@@ -60,11 +60,11 @@
             </div>
             <h3 class="article_title" id="article_title">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</h3>
             <div class="article_info"><span id="author">杰克</span> 发布于 <span id="date">2019-05-08
-                    07:08:46</span>&nbsp;&nbsp;&nbsp;分类: 奇趣事&nbsp;&nbsp;&nbsp;阅读:
+                    07:08:46</span>&nbsp;&nbsp;&nbsp;分类: <span id="cate">奇趣事</span>&nbsp;&nbsp;&nbsp;阅读:
                 (<span id="read">98</span>)&nbsp;&nbsp;&nbsp;评论: (0)</div>
             <div class="article_con" id="article_con">
 
-                <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
+                <!-- <p>“上天入地”还不够？硅谷“钢铁侠”马斯克名下一家低调的公司最近又融了一大笔钱。</p>
 
                 <p>马斯克投资的一家小型且不为人熟知的脑机接口（brain-computer
                     interface）公司Neuralink披露，该公司融到了3900万美元，虽然不及公司计划的融资额5100万美元，但也比上次的融资多了不少。</p>
@@ -73,7 +73,7 @@
 
                 <p>在Neuralink递交给美国证券交易委员会（SEC）的材料中，并没有披露融资是否来自传统的风险投资者或者来自该公司的员工。</p>
 
-                <p>2016年，Neuralink在美国加利福尼亚州以医学研究公司的名义成立，之后一直低调运行。</p>
+                <p>2016年，Neuralink在美国加利福尼亚州以医学研究公司的名义成立，之后一直低调运行。</p> -->
 
             </div>
             <div class="article_links">
@@ -189,8 +189,9 @@
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/template-web.js"></script>
-
     <script src="./js/utils/index.js"></script>
+    <script src="./js/utils/article_list.js"></script>
+    <script src="./js/common.js"></script>
 
     <script type="text/html" id="temp_category_search">
 
@@ -231,21 +232,29 @@
     {{/each}}
     </script>
     <!-- 文章热门排行模板 -->
+    <!-- var idx = idx + 1 ; -->
     <script id="temp_hot" type="text/html">
-    {{each data item}}
-    <li><span>{{$}}</span><a href="#">{{item.title}}</a></li>
+    {{each data item idx}}
+    {{if idx == 0 ||idx == 1 ||idx == 2}}
+    <li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
+    
+    {{else}}
+    <li><span>{{idx}}</span><a href="#">{{item.title}}</a></li>
+    
+    {{/if}}
     {{/each}}
     </script>
     <!-- 最新评论模板 -->
     <script id="temp_com" type="text/html">
         {{each data item}}
         <li>
-            <span></span>
+            <span>{{item.name.substr(0,1)}}</span>
             <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
             <strong>{{item.content}}</strong>
         </li>
+    
         {{/each}}
-    </script>
+        </script>
     <!--  文章详情模板 -->
     <script id="temp_detail" type="text/html">
 
@@ -273,15 +282,15 @@
         })
 
 
-        index_search.category_show(function (res) {
-            console.log(res);
-            // var strHtml = template('模板id',res)
-            var htmlStr = template('temp_category_search', res)
-            // console.log(htmlStr)
-            $('#level_two').html('    <li class="up"></li>' + htmlStr)
+        // index_search.category_show(function (res) {
+        //     console.log(res);
+        //     // var strHtml = template('模板id',res)
+        //     var htmlStr = template('temp_category_search', res)
+        //     // console.log(htmlStr)
+        //     $('#level_two').html('    <li class="up"></li>' + htmlStr)
 
-            $('#left_menu').html(htmlStr)
-        })
+        //     $('#left_menu').html(htmlStr)
+        // })
 
 
 
@@ -347,6 +356,24 @@
             author = res.data.author;
             date = res.data.date;
             read = res.data.read;
+            typeId = res.data.type;
+            // 在文章详情数据中，res.data.type保存是类型的编号
+            // 但是，要显示在页面上的却要是类型的名称。
+            // 思路： 
+            //  1. 先取出所有的类型数据
+            //  2. 在其中找出编号与res.data.type相同的那一项，再取出它的名称
+            index_search.category_show(function (result) {
+                console.log(result);
+                // 接下来，就是要在result.data这个数组中，找出哪一项它的id==res.data.type？
+                var rs = result.data.find(function (item) {
+                    if (item.id == typeId) {
+                        return true;
+                    }
+                })
+                if (rs) {
+                    $('#cate').text(rs.name)
+                }
+            })
 
             $('#article_con').html(content)
             $('#article_title').html(title)
@@ -356,11 +383,12 @@
             $('#date').html(date)
 
             $('#read').html(read)
+           
 
         })
 
     </script>
-    <script>
+    <!-- <script>
     
     // 文章热门排行
 index_search.in_rank( function (res) {
@@ -384,7 +412,7 @@ index_search.latest_com( function (res) {
 
     $('#comment_list ').html(htmlStr)
 })
-    </script>
+    </script> -->
 </body>
 
 </html>

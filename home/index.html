@@ -15,8 +15,8 @@
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片">
-            <button class="search_btn"><i class="fa fa-search"></i></button>
+            <input type="text" class="search_txt" placeholder="黑洞照片"  id="value">
+            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
             <a href="#"><i class="fa fa-angle-right"></i>&nbsp;&nbsp;网站地图</a><br>
@@ -178,15 +178,17 @@
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/index.js"></script>
-    <script src="./js/utils/common.js"></script>
+    <script src="./js/utils/article_list.js"></script>
+    <script src="./js/common.js"></script>
     <script src="./js/template-web.js"></script>
     <!-- 引入day.js -->
     <script src="./js/dayjs/dayjs.min.js"></script>
     <script src="./js/dayjs/zh_cn.js"></script>
     <script src="./js/dayjs/relative.min.js"></script>
+ 
     <script type="text/html" id="temp_category_search">
    
-        <!-- data:数组对象  item：数组每一项 -->
+    <!-- data:数组对象  item：数组每一项 -->
     {{each data item}}
     <li><a href="#">{{item.name}}</a></li>
 
@@ -229,39 +231,44 @@
     {{/each}}
 </script>
 <!-- 文章热门排行模板 -->
+<!-- var idx = idx + 1 ; -->
 <script id="temp_hot" type="text/html">
-{{each data item}}
-<li><span>{{$}}</span><a href="#">{{item.title}}</a></li>
+{{each data item idx}}
+{{if idx == 0 ||idx == 1 ||idx == 2}}
+<li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
+
+{{else}}
+<li><span>{{idx}}</span><a href="#">{{item.title}}</a></li>
+
+{{/if}}
 {{/each}}
 </script>
 <!-- 最新评论模板 -->
 <script id="temp_com" type="text/html">
     {{each data item}}
     <li>
-        <span></span>
+        <span>{{item.name.substr(0,1)}}</span>
         <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
         <strong>{{item.content}}</strong>
     </li>
+
     {{/each}}
     </script>
     <script>
-        dayjs.locale('zh-cn') ; // 全局设置，中文
+        // dayjs.locale('zh-cn') ; // 全局设置，中文
+
+       
         
-        // 应用插件
-        //  格式：dayjs.extend(dayjs_plugin_插件名);
-        dayjs.extend(dayjs_plugin_relativeTime);
-        console.log( dayjs().add(10,'day').format("YYYY-MM-DD dddd") )
-        console.log( dayjs(1574590762413).toNow() )
+        // // 应用插件
+        // //  格式：dayjs.extend(dayjs_plugin_插件名);
+        // dayjs.extend(dayjs_plugin_relativeTime);
+        // // console.log( dayjs().add(10,'day').format("YYYY-MM-DD dddd") )
+        // console.log( dayjs(1574590762413).toNow() )
     
     </script>
-     <script src="./js/index.js"></script>
+   <script src="./js/index.js"></script>
     <script>
-      
-// console.log($('common_news_list'));
-// $('common_news_list').click(function(){
-//     console.log(123);
-    
-// })
+
 
 
       

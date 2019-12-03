@@ -18,8 +18,8 @@
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片">
-            <button class="search_btn"><i class="fa fa-search"></i></button>
+            <input type="text" class="search_txt" placeholder="黑洞照片"  id="value">
+            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
             <a href="#"><i class="fa fa-angle-right"></i>&nbsp;&nbsp;网站地图</a><br>
@@ -164,7 +164,7 @@
             </div>
             <div class="common_wrap">
                 <h3><i class="fa fa-commenting-o"></i> 最新评论</h3>
-                <ul class="content_list comment_list" id="content_list comment_list">
+                <ul class="content_list comment_list" id="comment_list">
                     <li>
                         <span>山</span>
                         <b><em>山治</em> 9个月前(08-14)说:</b>
@@ -201,12 +201,12 @@
                 <h3><i class="fa fa-bullseye"></i> 焦点关注</h3>
                 <ul class="content_list guanzhu_list">
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界泡泡中的世界</a></li>
+                    <!-- <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
                     <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
-                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li>
+                    <li><a href="#">神奇的水滴摄影，泡泡中的世界</a></li> -->
                 </ul>
             </div>
         </div>
@@ -231,7 +231,8 @@
     <script src="./js/template-web.js"></script>
 
     <script src="./js/utils/index.js"></script>
-    <script src="./js/index.js"></script>
+    <script src="./js/utils/article_list.js"></script>
+    <script src="./js/common.js"></script>
 
     <script type="text/html" id="temp_category_search">
 
@@ -272,54 +273,30 @@
     {{/each}}
     </script>
     <!-- 文章热门排行模板 -->
-    <script id="temp_hot" type="text/html">
-    {{each data item}}
-    <li><span>{{$}}</span><a href="#">{{item.title}}</a></li>
+<script id="temp_hot" type="text/html">
+    {{each data item idx}}
+    {{if idx == 0}}
+    <li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
+    
+    {{else}}
+    <li><span>{{idx}}</span><a href="#">{{item.title}}</a></li>
+    {{/if}}
     {{/each}}
     </script>
     <!-- 最新评论模板 -->
     <script id="temp_com" type="text/html">
         {{each data item}}
         <li>
-            <span></span>
+            <span>{{item.name.substr(0,1)}}</span>
             <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
             <strong>{{item.content}}</strong>
         </li>
-        {{/each}}
-    </script>
     
+        {{/each}}
+        </script>
 
     <script>
-        //   分类
-        // 发请求显示页面内容
-        index_search.in_search(function (res) {
-            // console.log(11)
-            console.log(res);
-            // res = html(res)
-
-            // 使用模板引擎 
-            var htmlStr = template("temp_foucs", res)
-
-            // console.log(htmlStr);
-            $("#focus_list").html(htmlStr)
-
-            // // 最新资讯
-            // var htmlStr = template('temp_new', res)
-            // console.log(htmlStr);
-            // $('#new').html(htmlStr)
-
-        })
-
-
-        index_search.category_show(function (res) {
-            console.log(res);
-            // var strHtml = template('模板id',res)
-            var htmlStr = template('temp_category_search', res)
-            // console.log(htmlStr)
-            $('#level_two').html('    <li class="up"></li>' + htmlStr)
-
-            $('#left_menu').html(htmlStr)
-        })
+ 
     </script>
 </body>
 

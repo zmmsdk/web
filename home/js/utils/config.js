@@ -25,5 +25,17 @@ var APIURLS = {
 
     // 获取文章详情
     article_detail: baseUrl + 'search',
+
+
+    article_search:baseUrl +'admin/search',
+
+    category_search:baseUrl +'admin/category_search',
  
  }
+ // article_list页面接口
+// var article_url = {
+//     admin_search : baseUrl +'admin/search ' ,
+//     // article_search:baseUrl +'admin/search',
+//     article_delete:pbaseUrl +'article_delete',
+//     category_search:pbaseUrl +'admin/category_search',
+// }
