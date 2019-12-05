@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>大事件-文章</title>
+    <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -78,8 +79,14 @@
 
             </div>
             <div class="article_links">
-                上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br>
-                下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
+                <!-- 上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br>
+                下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a> -->
+                <div class="row text-center">
+                    <ul class="pagination pagination-sm" id="pagination-demo">
+                        <li class="page-item prev disabled"><a  href="#" class="page-link">上一篇： <span>世界第一台可以玩游戏的冰箱</span></a></li>
+                        <li class="page-item next"><a hjavascript:;ef="#" class="page-link">下一篇： <span>世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</span></a></li>
+                    </ul>
+                </div>
             </div>
 
             <form action="" class="comment_form" id="comment_form">
@@ -187,12 +194,13 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/jquery.twbsPagination.js"></script>
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/template-web.js"></script>
     <script src="./js/utils/index.js"></script>
     <script src="./js/utils/article_list.js"></script>
-    <script src="./js/common.js"></script>
+   
 
     <script type="text/html" id="temp_category_search">
 
@@ -237,10 +245,10 @@
     <script id="temp_hot" type="text/html">
     {{each data item idx}}
     {{if idx == 0 ||idx == 1 ||idx == 2}}
-    <li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
+    <li ><span class="first">{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
     
     {{else}}
-    <li><span>{{idx}}</span><a href="#">{{item.title}}</a></li>
+    <li><span>{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
     
     {{/if}}
     {{/each}}
@@ -387,31 +395,7 @@
         })
 
     </script>
-    <!-- <script>
-    
-    // 文章热门排行
-index_search.in_rank( function (res) {
-    console.log(res);
-    // var strHtml = template('模板id',res)
-    var htmlStr = template('temp_hot', res)
-    // console.log(htmlStr)
- 
-
-    $('#content_list').html(htmlStr)
-})
-
-
-// 最新评论
-index_search.latest_com( function (res) {
-    console.log(res);
-    // var strHtml = template('模板id',res)
-    var htmlStr = template('temp_com', res)
-    console.log(htmlStr)
- 
-
-    $('#comment_list ').html(htmlStr)
-})
-    </script> -->
+ <script src="./js/common.js"></script>
 </body>
 
 </html>

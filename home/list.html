@@ -32,7 +32,7 @@
         <div class="menu">
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
-                <ul class="level_two" id="level_two">
+                <ul class="level_two " id="level_two">
                     <li class="up"></li>
                     <!-- <li><a href="#">最 新</a></li>
                     <li><a href="#">科 技</a></li>
@@ -61,7 +61,7 @@
 
         <div class="left_con setfr"  >
             <div class="list_title">
-                <h3>科 技</h3>
+                <h3 id="ca">科 技</h3>
             </div>
 
             <div id="left_con">
@@ -229,10 +229,10 @@
     <script id="temp_hot" type="text/html">
     {{each data item idx}}
     {{if idx == 0}}
-    <li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
+    <li ><span class="first">{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
     
     {{else}}
-    <li><span>{{idx}}</span><a href="#">{{item.title}}</a></li>
+    <li><span>{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
     {{/if}}
     {{/each}}
     </script>
@@ -243,16 +243,15 @@
             <span>{{item.name.substr(0,1)}}</span>
             <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
             <strong>{{item.content}}</strong>
-        </li>
-    
+        </li>  
         {{/each}}
-        </script>
+    </script>
     <!-- sousuolist -->
     <script id="temp_con" type="text/html">
  {{each data item}}
  <div class="common_news_list">
-    <a href="#" class="list_pic"><img src="{{item.cover}}" alt=""></a>
-    <h4><a href="#">{{item.title }}</a></h4>
+    <a href="article.html?id={{item.id}}" class="list_pic"><img src="{{item.cover}}" alt=""></a>
+    <h4><a href="article.html?id={{item.id}}">{{item.title }}</a></h4>
     <p><%=#item.content.slice(0,200) %>
     </p>
     <div class="new_info">
