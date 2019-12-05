@@ -15,8 +15,9 @@
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片"  id="value">
-            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i class="fa fa-search"></i></a></button>
+            <input type="text" class="search_txt" placeholder="黑洞照片" id="value">
+            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i
+                        class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
             <a href="#"><i class="fa fa-angle-right"></i>&nbsp;&nbsp;网站地图</a><br>
@@ -223,7 +224,7 @@
     <script id="temp_commentlist" type="text/html">
     {{each data item}}
         <div class="comment_detail_list">
-            <div class="person_pic fl">段</div>
+            <div class="person_pic fl">{{item.name.slice(0,1)}}</div>
             <div class="name_time fl"><b>{{item.name}}</b><span>4小时前</span></div>
             <div class="comment_text fl">
                 {{item.content}}
@@ -383,8 +384,6 @@
             $('#date').html(date)
 
             $('#read').html(read)
-           
-
         })
 
     </script>

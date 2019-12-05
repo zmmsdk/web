@@ -27,9 +27,9 @@ var APIURLS = {
     article_detail: baseUrl + 'search',
 
 
-    article_search:baseUrl +'admin/search',
+    article_search:baseUrl +'search',
 
-    category_search:baseUrl +'admin/category_search',
+    category_search:baseUrl +'category',
  
  }
  // article_list页面接口

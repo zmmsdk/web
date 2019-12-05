@@ -6,17 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>大事件-首页</title>
+    <link rel="stylesheet" href="js/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
+
 </head>
 
 <body>
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片"  id="value">
-            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i class="fa fa-search"></i></a></button>
+            <input type="text" class="search_txt" placeholder="黑洞照片" id="value">
+            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i
+                        class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
             <a href="#"><i class="fa fa-angle-right"></i>&nbsp;&nbsp;网站地图</a><br>
@@ -46,7 +49,7 @@
     </div>
 
     <div class="main_con clearfix">
-        <div class="left_con" id="left_con">
+        <div class="left_con" >
             <ul class="focus_list" id="focus_list">
                 <!-- <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
@@ -60,8 +63,8 @@
                 <a href="#" class="more"><i class="fa fa-angle-double-right"></i></a>
             </div>
 
-           <div class="new" id="new">
-            <!-- <div class="common_news_list" id="common_news_list">
+            <div class="new" id="left_con">
+                <!-- <div class="common_news_list" id="common_news_list">
                 <a href="#" class="list_pic"><img src="images/pic09.jpg" alt=""></a>
                 <h4><a href="#">亚马逊金融试水中国？背后却是和华尔街的“金融战争” </a></h4>
                 <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
@@ -72,55 +75,24 @@
                     <b>发布于 2018-08-30 12:18:58</b>
                 </div>
             </div> -->
-           </div>
-
-            <!-- <div class="common_news_list">
-                <a href="#" class="list_pic"><img src="images/pic03.jpg" alt=""></a>
-                <h4><a href="#">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱,马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</a></h4>
-                <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
-                </p>
-                <div class="new_info">
-                    <span>标签：财经&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( 5
-                        )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( 10 )</span>
-                    <b>发布于 2018-08-30 12:18:58</b>
-                </div>
             </div>
 
-            <div class="common_news_list">
-                <a href="#" class="list_pic"><img src="images/pic05.jpg" alt=""></a>
-                <h4><a href="#">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</a></h4>
-                <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
-                </p>
-                <div class="new_info">
-                    <span>标签：财经&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( 5
-                        )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( 10 )</span>
-                    <b>发布于 2018-08-30 12:18:58</b>
-                </div>
-            </div>
 
-            <div class="common_news_list">
-                <a href="#" class="list_pic"><img src="images/pic07.jpg" alt=""></a>
-                <h4><a href="#">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</a></h4>
-                <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
-                </p>
-                <div class="new_info">
-                    <span>标签：财经&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( 5
-                        )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( 10 )</span>
-                    <b>发布于 2018-08-30 12:18:58</b>
-                </div>
+            <div class="row text-center">
+                <ul class="pagination pagination-sm" id="pagination-demo">
+                    <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
+                    <li class="page-item prev disabled"><a  href="#" class="page-link">上一页</a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link">6</a></li>
+                    <li class="page-item"><a href="#" class="page-link">7</a></li>
+                    <li class="page-item next"><a hjavascript:;ef="#" class="page-link">下一页</a></li>
+                    <li class="page-item last"><a href="#" class="page-link">尾页</a></li>
+                </ul>
             </div>
-
-            <div class="common_news_list">
-                <a href="#" class="list_pic"><img src="images/pic10.jpg" alt=""></a>
-                <h4><a href="#">马斯克的新花样？连接人脑和电脑的初创公司又筹了一笔钱</a></h4>
-                <p>亚马逊抛弃了中国的买家们，却难以割舍庞大的卖家市场，有消息指出亚马逊中国将针对中国庞大的卖家群体推出一项贷款推荐计划。在连续对印度、墨西哥等新兴市场大力推广线上支付服务后，亚马逊金融试水进军中国市场的信号终于被放出。
-                </p>
-                <div class="new_info">
-                    <span>标签：财经&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( 5
-                        )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论( 10 )</span>
-                    <b>发布于 2018-08-30 12:18:58</b>
-                </div>
-            </div> -->
 
         </div>
         <div class="right_con">
@@ -144,7 +116,7 @@
                         <b><em>山治</em> 9个月前(08-14)说:</b>
                         <strong>挺会玩的</strong>
                     </li> -->
-                   
+
                 </ul>
             </div>
             <div class="common_wrap">
@@ -176,29 +148,32 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
-    <script src="./js/utils/config.js"></script>
-    <script src="./js/utils/index.js"></script>
-    <script src="./js/utils/article_list.js"></script>
-    <script src="./js/common.js"></script>
-    <script src="./js/template-web.js"></script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
     <!-- 引入day.js -->
     <script src="./js/dayjs/dayjs.min.js"></script>
     <script src="./js/dayjs/zh_cn.js"></script>
     <script src="./js/dayjs/relative.min.js"></script>
- 
+    <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/index.js"></script>
+    <script src="./js/utils/article_list.js"></script>
+ <script src="./js/jquery.twbsPagination.js"></script>
+    <script src="./js/template-web.js"></script>
+
+
+
     <script type="text/html" id="temp_category_search">
-   
+
     <!-- data:数组对象  item：数组每一项 -->
     {{each data item}}
     <li><a href="#">{{item.name}}</a></li>
 
     {{/each}}
-</script>
+    </script>
     <!--模板引擎中if的用法-->
     <!-- // 如果是第一张，则要加上class="first" -->
     <!-- 如果是第一张图，则要给一个特殊的class -->
     <!-- 通过 idx来判断是否是第一张 -->
-    <script  id="temp_foucs" type="text/html">
+    <script id="temp_foucs" type="text/html">
         {{each data item idx}}
             {{if idx == 0}}
                 <li class="first">
@@ -213,13 +188,13 @@
             {{/if}}
         {{/each}}
     </script>
-    <!-- 最新资讯! --> 
-    <script  id="temp_new" type="text/html">
+    <!-- 最新资讯! -->
+    <script id="temp_con" type="text/html">
     {{each data item}}
     <div class="common_news_list" id = "com{{item.id}}" data-id = "common_news_list">
         <a href="article.html?id={{item.id}}" target = "_blank" class="list_pic"><img src="{{item.cover}}" alt=""></a>
         <h4><a href="article.html?id={{item.id}}" target = "_blank">{{item.title}} </a></h4>
-        <p><%=#item.content %>
+        <p><%=#item.content.slice(0,200) %>
         </p>
         <div class="new_info">
             <span>标签：{{item.type}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;阅读( {{item.comment}}
@@ -230,11 +205,11 @@
 
     {{/each}}
 </script>
-<!-- 文章热门排行模板 -->
-<!-- var idx = idx + 1 ; -->
-<script id="temp_hot" type="text/html">
+    <!-- 文章热门排行模板 -->
+    <!-- var idx = idx + 1 ; -->
+    <script id="temp_hot" type="text/html">
 {{each data item idx}}
-{{if idx == 0 ||idx == 1 ||idx == 2}}
+{{if idx == 1||idx == 2 ||idx == 3}}
 <li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
 
 {{else}}
@@ -243,8 +218,8 @@
 {{/if}}
 {{/each}}
 </script>
-<!-- 最新评论模板 -->
-<script id="temp_com" type="text/html">
+    <!-- 最新评论模板 -->
+    <script id="temp_com" type="text/html">
     {{each data item}}
     <li>
         <span>{{item.name.substr(0,1)}}</span>
@@ -257,21 +232,22 @@
     <script>
         // dayjs.locale('zh-cn') ; // 全局设置，中文
 
-       
-        
+
+
         // // 应用插件
         // //  格式：dayjs.extend(dayjs_plugin_插件名);
         // dayjs.extend(dayjs_plugin_relativeTime);
         // // console.log( dayjs().add(10,'day').format("YYYY-MM-DD dddd") )
         // console.log( dayjs(1574590762413).toNow() )
-    
+
     </script>
-   <script src="./js/index.js"></script>
+    <script src="./js/index.js"></script>
+    <script src="./js/common.js"></script>
     <script>
 
 
 
-      
+
     </script>
 </body>
 

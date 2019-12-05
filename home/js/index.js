@@ -11,9 +11,9 @@
     $("#focus_list").html(htmlStr)
 
      // 最新资讯
-     var htmlStr = template('temp_new', res)
+    //  var htmlStr = template('temp_new', res)
     // console.log(htmlStr);
-    $('#new').html(htmlStr)
+    // $('#new').html(htmlStr)
 
 })
 
