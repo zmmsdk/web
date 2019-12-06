@@ -2,7 +2,7 @@
 let baseUrl = 'http://localhost:8000/';
 
 // 列出所有用到的接口的地址
-var APIURLS = {
+let APIURLS = {
     category_show: baseUrl + 'category',
     article_show: baseUrl + 'search',
 
@@ -33,7 +33,7 @@ var APIURLS = {
  
  }
  // article_list页面接口
-// var article_url = {
+// let article_url = {
 //     admin_search : baseUrl +'admin/search ' ,
 //     // article_search:baseUrl +'admin/search',
 //     article_delete:pbaseUrl +'article_delete',

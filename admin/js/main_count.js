@@ -1,5 +1,5 @@
 // 文章数量统计
-var curve_show = `curve_show`;
+let curve_show = `curve_show`;
 
 
 
@@ -23,20 +23,20 @@ $.get(`${article.article_url}${article.admin_comment_count}`, function (res) {
 $.get(`${article.article_url}${article.admin_month_article_count}`, function (res) {
     console.log(res);
     if (res.code === 200) {
-        var data = res.data;
+        let data = res.data;
         console.log(data);
-        var oChart = echarts.init(document.getElementById(curve_show));
-        var aList_all = data;
+        let oChart = echarts.init(document.getElementById(curve_show));
+        let aList_all = data;
 
         let aCount = [];
         let aDate = [];
 
-        for (var i = 0; i < aList_all.length; i++) {
+        for (let i = 0; i < aList_all.length; i++) {
             aCount.push(aList_all[i].day_count);
             aDate.push(aList_all[i].day);
         }
 
-        var chartopt = {
+        let chartopt = {
             title: {
                 text: '月新增文章数',
                 left: 'center',
@@ -131,15 +131,15 @@ $.get(`${article.article_url}${article.admin_month_article_count}`, function (re
 $.get(`${article.article_url}${article.admin_article_category_count}`, function (res) {
     console.log(res);
     if (res.code === 200) {
-        var data = res.data;
+        let data = res.data;
         // console.log(data);
-        for (var i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
             console.log(data[i]);
 
         }
 
-        var oPie = echarts.init(document.getElementById('pie_show'));
-        var oPieopt = {
+        let oPie = echarts.init(document.getElementById('pie_show'));
+        let oPieopt = {
             title: {
                 top: 10,
                 text: '分类文章数量比',
@@ -220,7 +220,7 @@ $.get(`${article.article_url}${article.admin_article_category_count}`, function 
 $.get(`${article.article_url}${article.admin_article_category_visit}`, function (res) {
     console.log(res);
     if (res.code === 200) {
-        var data = res.data;
+        let data = res.data;
         console.log(data);
     }
 });

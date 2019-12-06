@@ -2,8 +2,8 @@
 // 分类导航
 index_search.category_show(function (res) {
     console.log(res);
-    // var strHtml = template('模板id',res)
-    var htmlStr = template('temp_category_search', res)
+    // let strHtml = template('模板id',res)
+    let htmlStr = template('temp_category_search', res)
     // console.log(htmlStr)
     $('#level_two').html('    <li class="up"></li>' + htmlStr)
 
@@ -12,8 +12,8 @@ index_search.category_show(function (res) {
 // 文章热门排行
 index_search.in_rank(function (res) {
     console.log(res);
-    // var strHtml = template('模板id',res)
-    var htmlStr = template('temp_hot', res)
+    // let strHtml = template('模板id',res)
+    let htmlStr = template('temp_hot', res)
     // console.log(htmlStr)
 
 
@@ -35,8 +35,8 @@ index_search.latest_com(function (res) {
 
     // });
 
-    // var strHtml = template('模板id',res)
-    var htmlStr = template('temp_com', res)
+    // let strHtml = template('模板id',res)
+    let htmlStr = template('temp_com', res)
     // console.log(htmlStr)
     $('#comment_list ').html(htmlStr)
 })
@@ -54,13 +54,13 @@ index_search.latest_com(function (res) {
 article_list.re_qu_dt(function (res) {
     console.log(res);
     //  使用模板引擎渲染数据
-    var htmlStr = template('temp_con', res);
+    let htmlStr = template('temp_con', res);
     // console.log(htmlStr);
     $('#left_con').html(htmlStr);
 })
 //分页插件(存在问题)
 // 保存当前要查询的页数
-var curPage;
+let curPage;
 
 $('#pagination-demo').twbsPagination({
     totalPages: 46, // 总页数
@@ -87,8 +87,8 @@ $('#pagination-demo').twbsPagination({
             // 4.  渲染数据·
             if (res.code === 200) {
                 // 使用模板引擎技术，渲染数据
-                // var htmlStr = template(id，res)
-                var htmlStr = template('temp_con', res)
+                // let htmlStr = template(id，res)
+                let htmlStr = template('temp_con', res)
                 // console.log(htmlStr)
                 $('#left_con').html(htmlStr);
             }
@@ -144,15 +144,15 @@ $('#pagination-demo').twbsPagination({
 //     <!-- 定义模板 -->
 // <script>
 /* // 全局变量  */
-var curPage = ''; // 表示当前要展示第几页
-var type = ''; // 表示文章的类型
-var state = ''; // 表示文章的状态
-var curTotalPage = ''; // 表示当前查询总页数
+let curPage = ''; // 表示当前要展示第几页
+let type = ''; // 表示文章的类型
+let state = ''; // 表示文章的状态
+let curTotalPage = ''; // 表示当前查询总页数
 /* // 1.局部更新下拉框
 // 发请求先把下拉框分类数据拿回来渲染在页面中 */
 /* // 文章筛选：1.点击筛选拿回所有数据 */
 $('#btn').click(function () {
-    var type_txt = $('#value').val().trim()
+    let type_txt = $('#value').val().trim()
     $('#ca').html(type_txt)
     if (type_txt === '') {
         alert('请输入分类名')
@@ -187,13 +187,17 @@ $('#level_two').on('click', 'a', function () {
 
 })
 
+// 首页跳转局部更新
+console.log(location.search);
+
+
 
 
 
 
 
 // 文章筛选函数
-var get_show = {
+let get_show = {
     show_request: function (type_txt) {
         index_search.category_show(function (res) {
             // 1. 获取当前的筛选条件。保存到全局变量中
@@ -213,8 +217,8 @@ var get_show = {
                         console.log(totalPage);
                         // 对所有符合要求的数据在页面局部更新:点击筛选把分页销毁  让分页不能再点击
                         // 使用模板引擎技术，渲染数据
-                        // var htmlStr = template(id，res)
-                        var htmlStr = template('temp_con', res)
+                        // let htmlStr = template(id，res)
+                        let htmlStr = template('temp_con', res)
                         console.log(htmlStr);
                         $('#left_con').html(htmlStr)
                         // 解决前后总页面不一样的方法：销毁分页重新再做一个分页
@@ -248,8 +252,8 @@ var get_show = {
                                     // //         // 4.  渲染数据·
                                     if (res.code === 200) {
                                         // 使用模板引擎技术，渲染数据
-                                        // var htmlStr = template(id，res)
-                                        var htmlStr = template('temp_con', res)
+                                        // let htmlStr = template(id，res)
+                                        let htmlStr = template('temp_con', res)
                                         // console.log(htmlStr)
                                         $('#left_con').html(htmlStr)
                                     }

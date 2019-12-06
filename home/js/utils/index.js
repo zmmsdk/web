@@ -1,4 +1,4 @@
-var index_search={
+let index_search={
  
     category_show:(callback) =>{
         $.get(APIURLS.category_show,

@@ -18,7 +18,7 @@
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
             <input type="text" class="search_txt" placeholder="黑洞照片" id="value">
-            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i
+            <button class="search_btn" type="button" id="btn"><a href="./list.html?type=新闻"><i
                         class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
@@ -177,12 +177,12 @@
         {{each data item idx}}
             {{if idx == 0}}
                 <li class="first">
-                    <a href="#"><img src="{{item.cover}}" alt="{{item.title}}"></a>
+                    <a href="article.html?id={{item.id}}"><img src="{{item.cover}}" alt="{{item.title}}"></a>
                     <p>{{item.title}}</p>
                 </li>
             {{else}}
                 <li>
-                    <a href="#"><img src="{{item.cover}}" alt="{{item.title}}"></a>
+                    <a href="article.html?id={{item.id}}"><img src="{{item.cover}}" alt="{{item.title}}"></a>
                     <p>{{item.title}}</p>
                 </li>
             {{/if}}
@@ -210,10 +210,10 @@
     <script id="temp_hot" type="text/html">
 {{each data item idx}}
 {{if idx == 1||idx == 2 ||idx == 3}}
-<li ><span class="first">{{idx}}</span><a href="#">{{item.title}}</a></li>
+<li ><span class="first">{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
 
 {{else}}
-<li><span>{{idx}}</span><a href="#">{{item.title}}</a></li>
+<li><span>{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
 
 {{/if}}
 {{/each}}

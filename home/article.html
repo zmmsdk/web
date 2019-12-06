@@ -241,7 +241,7 @@
     {{/each}}
     </script>
     <!-- 文章热门排行模板 -->
-    <!-- var idx = idx + 1 ; -->
+    <!-- let idx = idx + 1 ; -->
     <script id="temp_hot" type="text/html">
     {{each data item idx}}
     {{if idx == 0 ||idx == 1 ||idx == 2}}
@@ -278,13 +278,13 @@
             // res = html(res)
 
             // 使用模板引擎 
-            var htmlStr = template("temp_foucs", res)
+            let htmlStr = template("temp_foucs", res)
 
             // console.log(htmlStr);
             $("#focus_list").html(htmlStr)
 
             // // 最新资讯
-            // var htmlStr = template('temp_new', res)
+            // let htmlStr = template('temp_new', res)
             // console.log(htmlStr);
             // $('#new').html(htmlStr)
 
@@ -293,8 +293,8 @@
 
         // index_search.category_show(function (res) {
         //     console.log(res);
-        //     // var strHtml = template('模板id',res)
-        //     var htmlStr = template('temp_category_search', res)
+        //     // let strHtml = template('模板id',res)
+        //     let htmlStr = template('temp_category_search', res)
         //     // console.log(htmlStr)
         //     $('#level_two').html('    <li class="up"></li>' + htmlStr)
 
@@ -307,8 +307,8 @@
 
         $('#comment_sub').click(function () {
             console.log('点击事件添加成功');
-            var comment_name = $('#comment_name').val().trim()
-            var comment_input = $('#comment_input').val().trim()
+            let comment_name = $('#comment_name').val().trim()
+            let comment_input = $('#comment_input').val().trim()
 
             if (comment_name === '' || comment_input === '') {
                 alert('输入不能为空')
@@ -317,8 +317,8 @@
 
                 // 发表评论
                 article_search.sub(comment_name, comment_input, function (res) {
-                    console.log(res);
-                    console.log(456);
+                    // console.log(res);
+                    // console.log(456);
                     // 根据返回结果进行后续的处理
                     //（1） 清空留言区域
                     $('#comment_name').val('')
@@ -333,11 +333,11 @@
 
 
         article_search.comment_li(function (res) {
-            console.log(res);
-            // 翻转数组获取最新评论
+            
+            // 翻转数组获取最新评论:操作res属性值时需要重新赋值给这个属性
             //  console.log(res.data.reverse());
-            res.data.reverse()
-
+            res.data = res.data.reverse() 
+            console.log(res.data.reverse());
 
 
 
@@ -345,7 +345,7 @@
 
             $('#messages').empty()
             // 模板引擎渲染数据
-            var strHtml = template('temp_commentlist', res)
+            let strHtml = template('temp_commentlist', res)
             // console.log(strHtml);
             // 追加到页面
             $('#messages').append(strHtml)
@@ -356,7 +356,7 @@
 
     </script>
     <script>
-        var id = location.search.substr(4)
+        let id = location.search.substr(4)
         //    alert(id)
         article_search.ar_detail(id, function (res) {
             console.log(res);
@@ -374,7 +374,7 @@
             index_search.category_show(function (result) {
                 console.log(result);
                 // 接下来，就是要在result.data这个数组中，找出哪一项它的id==res.data.type？
-                var rs = result.data.find(function (item) {
+                let rs = result.data.find(function (item) {
                     if (item.id == typeId) {
                         return true;
                     }

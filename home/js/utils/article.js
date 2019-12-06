@@ -1,4 +1,4 @@
-var article_search = {
+let article_search = {
     
     sub:(comment_name,comment_input ,callback) =>{
         $.post(APIURLS.sub_comment,{ name: comment_name, content:  comment_input },

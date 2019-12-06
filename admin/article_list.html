@@ -316,8 +316,8 @@
             // 4.  渲染数据
             if (res.code === 200) {
                 // 使用模板引擎技术，渲染数据
-                // var htmlStr = template(id，res)
-                var htmlStr = template($temp_table, res)
+                // let htmlStr = template(id，res)
+                let htmlStr = template($temp_table, res)
                 // console.log(htmlStr)
                 $articleContainer.html(htmlStr)
             }
@@ -330,7 +330,7 @@
 
 
 
-        var curPage;
+        let curPage;
 
         $('#pagination-demo').twbsPagination({
             totalPages: 46, // 总页数
@@ -360,8 +360,8 @@
             // 4.  渲染数据·
             if (res.code === 200) {
                 // 使用模板引擎技术，渲染数据
-                // var htmlStr = template(id，res)
-                var htmlStr = template($temp_table, res)
+                // let htmlStr = template(id，res)
+                let htmlStr = template($temp_table, res)
                 // console.log(htmlStr)+
                 $articleContainer.html(htmlStr)
             }
@@ -392,15 +392,15 @@
                 return;
             }
             // 从dom中取出自定义 属性
-            var id = $(this).attr('data-id')
-            // var this_element = $(this).parents('tr').remove()
+            let id = $(this).attr('data-id')
+            // let this_element = $(this).parents('tr').remove()
             // 去调用 article.js中的方法，去做删除
             console.log(id);
 
             article_list.article_delete(id, function (res) {
                 console.log(res);
                 if (res.code === 200) {
-                    var this_element = $(this).parents('tr').remove()
+                    let this_element = $(this).parents('tr').remove()
                 }
                 else {
                     alert(msg);
@@ -416,11 +416,11 @@
 
     <script>
         // 全局变量 
-        var curPage = ''; // 表示当前要展示第几页
-        var type = ''; // 表示文章的类型
-        var state = ''; // 表示文章的状态
+        let curPage = ''; // 表示当前要展示第几页
+        let type = ''; // 表示文章的类型
+        let state = ''; // 表示文章的状态
 
-        var curTotalPage = ''; // 表示当前查询总页数
+        let curTotalPage = ''; // 表示当前查询总页数
         // 1.局部更新下拉框
         // 发请求先把下拉框分类数据拿回来渲染在页面中
      
@@ -428,7 +428,7 @@
        article_list.requery_da(function (res) {
             console.log(res);
             //  使用模板引擎渲染数据
-            var htmlStr = template('temp_cate', res);
+            let htmlStr = template('temp_cate', res);
             // console.log(htmlStr);
             $('#selCategory').html(htmlStr);
         })
@@ -459,8 +459,8 @@
     
             // 对所有符合要求的数据在页面局部更新:点击筛选把分页销毁  让分页不能再点击
             // 使用模板引擎技术，渲染数据
-            // var htmlStr = template(id，res)
-            var htmlStr = template($temp_table, res)
+            // let htmlStr = template(id，res)
+            let htmlStr = template($temp_table, res)
             $articleContainer.html(htmlStr)
     
             // 解决前后总页面不一样的方法：销毁分页重新再做一个分页
@@ -499,8 +499,8 @@
             // //         // 4.  渲染数据·
             if (res.code === 200) {
                 // 使用模板引擎技术，渲染数据
-                // var htmlStr = template(id，res)
-                var htmlStr = template($temp_table, res)
+                // let htmlStr = template(id，res)
+                let htmlStr = template($temp_table, res)
                 // console.log(htmlStr)+
                 $articleContainer.html(htmlStr)
             }
@@ -524,7 +524,7 @@
             //     return;
             // }
             // 从dom中取出自定义 属性
-            var id = $(this).attr('data-id')
+            let id = $(this).attr('data-id')
            article_list.get_location(id,function (res) {
             console.log(res.data.id);
               console.log('页面跳转');

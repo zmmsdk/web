@@ -1,7 +1,7 @@
 // console.log(123);
 
 // 创建文章列表
-var article_list = {
+let article_list = {
     article_li: function (curPage,callback) {
         $.get(APIURLS.article_search, { totalPages: curPage, page: curPage }, function (res) {
            callback(res)

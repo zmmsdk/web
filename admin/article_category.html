@@ -139,8 +139,8 @@
    cate_show.data_show(function (res) {
         console.log(res);
         //4. 使用模板引擎技术，渲染数据
-          // var htmlStr = template(id，res)
-          var htmlStr = template('temp_insert', res)
+          // let htmlStr = template(id，res)
+          let htmlStr = template('temp_insert', res)
           // console.log(htmlStr)+
           $('#article_cate').html(htmlStr)
         
@@ -171,9 +171,9 @@
 
 
     $('#model_add').click(function () {
-      // var fd = new FormData(document.getElementById('new_data'));
-      var recipient_name = $(' #recipient-name').val();
-      var recipient_other_name = $('#recipient-other-name ').val();
+      // let fd = new FormData(document.getElementById('new_data'));
+      let recipient_name = $(' #recipient-name').val();
+      let recipient_other_name = $('#recipient-other-name ').val();
       // console.log(recipient_name, recipient_other_name);
       // alert('您确定要新增么');
       $('#addModal').modal('hide');
@@ -210,9 +210,9 @@
         // 1.选中编辑按钮的父元素的兄弟元素的值
         // 获取当前编辑的类别信息
         // 获取自定义属性
-        var id = $(this).attr('data-id')
-        var name = $(this).attr('data-name')
-        var slug = $(this).attr('data-slug')
+        let id = $(this).attr('data-id')
+        let name = $(this).attr('data-name')
+        let slug = $(this).attr('data-slug')
         console.log(id, name, slug);
         // 显示编辑模态框
         $('#editModal').modal('show')
@@ -235,9 +235,9 @@
     // 编辑 -  保存
     $('#model_add').click(function () {
       // 获取用户填入的信息
-      var id = $('#recipient-id-name').val().trim()
-      var name = $('#recipient-name').val().trim()
-      var slug = $('#recipient-other-name').val().trim()
+      let id = $('#recipient-id-name').val().trim()
+      let name = $('#recipient-name').val().trim()
+      let slug = $('#recipient-other-name').val().trim()
       // 简单判断是否为空
       if (name === '' || slug === '') {
         alert('不能为空')
@@ -272,7 +272,7 @@
         return;
       }
       // 获取自定义属性
-      var id = $(this).attr('data-id')
+      let id = $(this).attr('data-id')
       console.log(id);
      
       cate_show.cate_delete(id,function (res) {
@@ -286,8 +286,8 @@
          cate_show.re_data(function (res) {
           console.log(res);
           //4. 使用模板引擎技术，渲染数据
-          {  // var htmlStr = template(id，res)
-            var htmlStr = template('temp_insert', res)
+          {  // let htmlStr = template(id，res)
+            let htmlStr = template('temp_insert', res)
             // console.log(htmlStr)+
             $('#article_cate').html(htmlStr)
           }
