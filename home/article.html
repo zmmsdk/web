@@ -10,14 +10,15 @@
     <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- <base target="_blank"> -->
 </head>
 
 <body>
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片" id="value">
-            <button class="search_btn" type="button" id="btn"><a href="./list.html"><i
+            <input type="text" class="search_txt" placeholder="请输入文章分类" id="value">
+            <button class="search_btn" type="button" id="btn"><a href='javascript:;'><i
                         class="fa fa-search"></i></a></button>
         </div>
         <div class="link_info fr">
@@ -30,7 +31,7 @@
         <div class="menu">
             <div class="menu_collapse fl">
                 <a href="javascript:;" class="level_one"><i class="fa fa-list-ul"></i>全部分类</a>
-                <ul class="level_two" id="level_two">
+                <ul class="level_two menu_le" id="level_two">
                     <!-- <li class="up"></li>
                     <li><a href="#">最 新</a></li>
                     <li><a href="#">科 技</a></li>
@@ -40,7 +41,7 @@
                     <li><a href="#">公 司</a></li> -->
                 </ul>
             </div>
-            <ul class="left_menu fl" id="left_menu">
+            <ul class="left_menu fl menu_le" id="left_menu">
                 <!-- <li><a href="#">最 新</a></li>
                 <li><a href="#">科 技</a></li>
                 <li><a href="#">股 市</a></li>
@@ -79,14 +80,14 @@
 
             </div>
             <div class="article_links">
-                <!-- 上一篇： <a href="#">世界第一台可以玩游戏的冰箱</a><br>
-                下一篇： <a href="#">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a> -->
-                <div class="row text-center">
+                上一篇： <a href="javascript:;" id="pre">世界第一台可以玩游戏的冰箱</a><br>
+                下一篇： <a href="javascript:;" id="next">世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</a>
+                <!-- <div class="row text-center">
                     <ul class="pagination pagination-sm" id="pagination-demo">
                         <li class="page-item prev disabled"><a  href="#" class="page-link">上一篇： <span>世界第一台可以玩游戏的冰箱</span></a></li>
                         <li class="page-item next"><a hjavascript:;ef="#" class="page-link">下一篇： <span>世界第一个可以玩游戏的马桶、世界上第一个可以玩游戏的茶杯</span></a></li>
                     </ul>
-                </div>
+                </div> -->
             </div>
 
             <form action="" class="comment_form" id="comment_form">
@@ -194,7 +195,11 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
-    <script src="./js/jquery.twbsPagination.js"></script>
+     <!-- 引入day.js -->
+     <script src="./js/dayjs/dayjs.min.js"></script>
+     <script src="./js/dayjs/zh_cn.js"></script>
+     <script src="./js/dayjs/relative.min.js"></script>
+    <!-- <script src="./js/jquery.twbsPagination.js"></script> -->
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/template-web.js"></script>
@@ -243,22 +248,24 @@
     <!-- 文章热门排行模板 -->
     <!-- let idx = idx + 1 ; -->
     <script id="temp_hot" type="text/html">
-    {{each data item idx}}
-    {{if idx == 0 ||idx == 1 ||idx == 2}}
-    <li ><span class="first">{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
-    
-    {{else}}
-    <li><span>{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
-    
-    {{/if}}
-    {{/each}}
+        {{each data item idx}}
+        {{if idx == 0 }}
+        <li ><span class="first">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
+         {{else if  idx == 1}}
+        <li><span class="second">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li> 
+        {{else if  idx == 2}}
+        <li><span class="third">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li> 
+        {{else}}
+        <li ><span class="">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
+        {{/if}}
+         {{/each}}  
     </script>
     <!-- 最新评论模板 -->
     <script id="temp_com" type="text/html">
         {{each data item}}
         <li>
             <span>{{item.name.substr(0,1)}}</span>
-            <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
+            <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.relativeDt}}</b>
             <strong>{{item.content}}</strong>
         </li>
     
@@ -396,6 +403,38 @@
 
     </script>
  <script src="./js/common.js"></script>
+ <script>
+ // 导航事件委托筛选
+// 下拉分类导航筛选
+$('.menu_le').on('click', 'a', function () {
+    type_txt = $(this).text();
+    console.log(type_txt);
+    // alert(`./list.html?type=${type_txt}`)
+    location.href = `./list.html?type=${type_txt}`
+    
+    // $('#ca').html(type_txt) 
+})
+
+// 搜索框
+$('#btn').click( function () {
+    type_txt = $('#value').val();
+    console.log(type_txt);
+    // alert(`./list.html?type=${type_txt}`)
+    location.href = `./list.html?type=${type_txt}`
+    
+    // $('#ca').html(type_txt) 
+})
+
+// 上一页  下一页
+$('pre').click(function(){
+    console.log(123);
+    
+})
+$('next').click(function(){
+    console.log(456);
+    
+})
+ </script>
 </body>
 
 </html>

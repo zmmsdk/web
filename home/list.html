@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/jquery.pagination.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!-- <base target="_blank"> -->
 
 </head>
 
@@ -175,6 +176,10 @@
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+     <!-- 引入day.js -->
+     <script src="./js/dayjs/dayjs.min.js"></script>
+     <script src="./js/dayjs/zh_cn.js"></script>
+     <script src="./js/dayjs/relative.min.js"></script>
 
     <script src="./js/template-web.js"></script>
 
@@ -212,6 +217,8 @@
                     <p>{{item.title}}</p>
                 </li>
             {{/if}}
+           
+            
         {{/each}}
     </script>
     <script id="temp_commentlist" type="text/html">
@@ -227,21 +234,24 @@
     </script>
     <!-- 文章热门排行模板 -->
     <script id="temp_hot" type="text/html">
-    {{each data item idx}}
-    {{if idx == 0}}
-    <li ><span class="first">{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
-    
-    {{else}}
-    <li><span>{{idx}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
-    {{/if}}
-    {{/each}}
+        {{each data item idx}}
+        {{if idx == 0 }}
+        <li ><span class="first">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
+         {{else if  idx == 1}}
+        <li><span class="second">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li> 
+        {{else if  idx == 2}}
+        <li><span class="third">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li> 
+        {{else}}
+        <li ><span class="">{{idx + 1}}</span><a href="article.html?id={{item.id}}">{{item.title}}</a></li>
+        {{/if}}
+         {{/each}}  
     </script>
     <!-- 最新评论模板 -->
     <script id="temp_com" type="text/html">
         {{each data item}}
         <li>
             <span>{{item.name.substr(0,1)}}</span>
-            <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.dt}}</b>
+            <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.relativeDt}}</b>
             <strong>{{item.content}}</strong>
         </li>  
         {{/each}}
@@ -264,6 +274,7 @@
     </script>
 
     <script src="./js/common.js"></script>
+    <script src="./js/getsearch.js"></script>
 </body>
 
 </html>
