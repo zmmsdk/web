@@ -18,7 +18,7 @@
     <div class="header">
         <a href="#" class="logo fl"><img src="images/logo.png" alt="logo"></a>
         <div class="search_form fl">
-            <input type="text" class="search_txt" placeholder="黑洞照片" id="value">
+            <input type="text" class="search_txt" placeholder="请输入分类" id="value">
             <button class="search_btn" type="button" id="btn"><a href='javascript:;'><i
                         class="fa fa-search"></i></a></button>
         </div>
@@ -43,9 +43,11 @@
 
             </ul>
             <ul class="right_menu fr">
-                <li><a href="#">科技专题</a></li>
-                <li><a href="#">财经专题</a></li>
+                <li><a href="./login.html" id="txt_name">登录</a></li>
+                <li><a href="./login.html" id="linkArea" style="display: none;">yonghuming</a></li>
+                <li><a href="./reg.html">我要注册</a></li>
             </ul>
+           
         </div>
     </div>
 
@@ -231,7 +233,6 @@
         <b><em style = "font-style:normal; ">{{item.name}}</em> {{item.relativeDt}}</b>
         <strong>{{item.content}}</strong>
     </li>
-
     {{/each}}
     </script>
     <script>
@@ -269,6 +270,33 @@ $('#btn').click( function () {
 
 
 
+    </script>
+    <script>
+    $.ajax({
+        type:'get ',
+        url: 'http://localhost:8000/checklog',
+        success(res){
+            console.log(res);
+            // 已登录
+            
+            if(res.code === 200){
+            // 已登陆
+            $('#formArea').show()
+            $('#linkArea').hide()
+
+            // 显示用户名
+            $('#txt_name').text(res.loginname)
+          } else {
+            // 已登陆
+            $('#formArea').hide()
+            $('#linkArea').show()
+
+            // 显示用户名
+            $('#txt_name').text('yourname')
+          }
+            
+        }
+    })
     </script>
 </body>
 

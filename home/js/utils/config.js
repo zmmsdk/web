@@ -30,6 +30,12 @@ let APIURLS = {
     article_search:baseUrl +'search',
 
     category_search:baseUrl +'category',
+
+    // 用户注册
+    user_register: baseUrl + 'adduser',
+
+    // 用户登录
+    user_login:baseUrl + 'user_login',
  
  }
  // article_list页面接口
@@ -39,3 +45,5 @@ let APIURLS = {
 //     article_delete:pbaseUrl +'article_delete',
 //     category_search:pbaseUrl +'admin/category_search',
 // }
+
+
