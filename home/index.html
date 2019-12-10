@@ -45,14 +45,15 @@
             <ul class="right_menu fr">
                 <li><a href="./login.html" id="txt_name">登录</a></li>
                 <li><a href="./login.html" id="linkArea" style="display: none;">yonghuming</a></li>
-                <li><a href="./reg.html">我要注册</a></li>
+                <li><a href="./reg.html" id="register">我要注册</a></li>
+                <li><a href="javascript:;" id="logout" style="display: none;">退出</a></li>
             </ul>
-           
+
         </div>
     </div>
 
     <div class="main_con clearfix">
-        <div class="left_con" >
+        <div class="left_con">
             <ul class="focus_list" id="focus_list">
                 <!-- <li class="first">
                     <a href="#"><img src="images/pic01.jpg" alt=""></a>
@@ -84,7 +85,7 @@
             <div class="row text-center">
                 <ul class="pagination pagination-sm" id="pagination-demo">
                     <li class="page-item first disabled"><a href="#" class="page-link">首页</a></li>
-                    <li class="page-item prev disabled"><a  href="#" class="page-link">上一页</a></li>
+                    <li class="page-item prev disabled"><a href="#" class="page-link">上一页</a></li>
                     <li class="page-item active"><a href="#" class="page-link">1</a></li>
                     <li class="page-item"><a href="#" class="page-link">2</a></li>
                     <li class="page-item"><a href="#" class="page-link">3</a></li>
@@ -159,7 +160,7 @@
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/index.js"></script>
     <script src="./js/utils/article_list.js"></script>
- <script src="./js/jquery.twbsPagination.js"></script>
+    <script src="./js/jquery.twbsPagination.js"></script>
     <script src="./js/template-web.js"></script>
 
 
@@ -247,56 +248,82 @@
     <script src="./js/index.js"></script>
     <script src="./js/common.js"></script>
     <script>
-// 导航事件委托筛选
-// 下拉分类导航筛选
-$('.menu_le').on('click', 'a', function () {
-    type_txt = $(this).text();
-    console.log(type_txt);
-    // alert(`./list.html?type=${type_txt}`)
-    location.href = `./list.html?type=${type_txt}`
-    
-    // $('#ca').html(type_txt) 
-})
+        // 导航事件委托筛选
+        // 下拉分类导航筛选
+        $('.menu_le').on('click', 'a', function () {
+            type_txt = $(this).text();
+            console.log(type_txt);
+            // alert(`./list.html?type=${type_txt}`)
+            location.href = `./list.html?type=${type_txt}`
 
-// 搜索框
-$('#btn').click( function () {
-    type_txt = $('#value').val();
-    console.log(type_txt);
-    // alert(`./list.html?type=${type_txt}`)
-    location.href = `./list.html?type=${type_txt}`
-    
-    // $('#ca').html(type_txt) 
-})
+            // $('#ca').html(type_txt) 
+        })
+
+        // 搜索框
+        $('#btn').click(function () {
+            type_txt = $('#value').val();
+            console.log(type_txt);
+            // alert(`./list.html?type=${type_txt}`)
+            location.href = `./list.html?type=${type_txt}`
+
+            // $('#ca').html(type_txt) 
+        })
 
 
 
     </script>
     <script>
-    $.ajax({
-        type:'get ',
-        url: 'http://localhost:8000/checklog',
-        success(res){
-            console.log(res);
-            // 已登录
-            
-            if(res.code === 200){
-            // 已登陆
-            $('#formArea').show()
-            $('#linkArea').hide()
 
-            // 显示用户名
-            $('#txt_name').text(res.loginname)
-          } else {
-            // 已登陆
-            $('#formArea').hide()
-            $('#linkArea').show()
+        // 
+        $.ajax({
+            type: 'get',
+            url: APIURLS.if_login,
+            success(res) {
+                console.log(res);
+                // 已登录
 
-            // 显示用户名
-            $('#txt_name').text('yourname')
-          }
-            
-        }
-    })
+                if (res.code === 200) {
+                    // 已登陆
+                    $('#formArea').show()
+                    $('#logout').show()
+                    $('#linkArea').hide()
+                    $('#register').hide()
+
+                    // 显示用户名
+                    $('#txt_name').text(res.loginname)
+                } else {
+                    // 已退出
+                    $('#formArea').hide()
+                    $('#linkArea').hide()
+                    $('#logout').hide()
+                    $('#register').show()
+
+                }
+
+            },
+            crossDomain: true,
+            xhrFields: {
+                withCredentials: true
+            },
+        })
+
+        // 退出
+        $('#logout').click(() => {
+
+            $.ajax({
+                url: APIURLS.logout_login,
+                type: 'get',
+                success(res) {
+                    // if (res.code === 200) {
+                    location.href = "./login.html"
+                    // }
+                },
+                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+            })
+        })
     </script>
 </body>
 

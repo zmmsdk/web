@@ -36,6 +36,11 @@ let APIURLS = {
 
     // 用户登录
     user_login:baseUrl + 'user_login',
+
+    // 检查是否登录
+    if_login:baseUrl +'checklogin',
+    // 退出登录
+    logout_login:baseUrl +'quit',
  
  }
  // article_list页面接口
