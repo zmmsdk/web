@@ -7,8 +7,9 @@ let article_search = {
             callback(res)
         })
     },
+    // 获取所有评论
    comment_li:(callback) =>{
-        $.get(APIURLS.li_comment,function(res){
+        $.post(APIURLS.li_comment,function(res){
             callback(res)
         })
     },

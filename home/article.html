@@ -50,8 +50,10 @@
                 <li><a href="#">公 司</a></li> -->
             </ul>
             <ul class="right_menu fr">
-                <li><a href="#">科技专题</a></li>
-                <li><a href="#">财经专题</a></li>
+                <li><a href="./login.html" id="txt_name">登录</a></li>
+                <li><a href="./login.html" id="linkArea" style="display: none;">yonghuming</a></li>
+                <li><a href="./reg.html" id="register">我要注册</a></li>
+                <li><a href="javascript:;" id="logout" style="display: none;">退出</a></li>
             </ul>
         </div>
     </div>
@@ -195,17 +197,17 @@
         <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
     <script src="./js/jquery-1.12.4.min.js"></script>
-     <!-- 引入day.js -->
-     <script src="./js/dayjs/dayjs.min.js"></script>
-     <script src="./js/dayjs/zh_cn.js"></script>
-     <script src="./js/dayjs/relative.min.js"></script>
+    <!-- 引入day.js -->
+    <script src="./js/dayjs/dayjs.min.js"></script>
+    <script src="./js/dayjs/zh_cn.js"></script>
+    <script src="./js/dayjs/relative.min.js"></script>
     <!-- <script src="./js/jquery.twbsPagination.js"></script> -->
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/article.js"></script>
     <script src="./js/template-web.js"></script>
     <script src="./js/utils/index.js"></script>
     <script src="./js/utils/article_list.js"></script>
-   
+
 
     <script type="text/html" id="temp_category_search">
 
@@ -289,29 +291,23 @@
 
             // console.log(htmlStr);
             $("#focus_list").html(htmlStr)
-
-            // // 最新资讯
-            // let htmlStr = template('temp_new', res)
-            // console.log(htmlStr);
-            // $('#new').html(htmlStr)
-
         })
+        // 获取留言并显示
 
+        article_search.comment_li(function (res) {
+            console.log(res);
 
-        // index_search.category_show(function (res) {
-        //     console.log(res);
-        //     // let strHtml = template('模板id',res)
-        //     let htmlStr = template('temp_category_search', res)
-        //     // console.log(htmlStr)
-        //     $('#level_two').html('    <li class="up"></li>' + htmlStr)
-
-        //     $('#left_menu').html(htmlStr)
-        // })
-
-
-
-
-
+            // 翻转数组获取最新评论:操作res属性值时需要重新赋值给这个属性
+            //  console.log(res.data.reverse());
+            res.data = res.data.reverse()
+            console.log(res.data);
+            // 清除之前的留言内容
+            $('#messages').empty()
+            // 模板引擎渲染数据
+            let strHtml = template('temp_commentlist', res)
+            // 追加到页面
+            $('#messages').append(strHtml)
+        })
         $('#comment_sub').click(function () {
             console.log('点击事件添加成功');
             let comment_name = $('#comment_name').val().trim()
@@ -324,41 +320,32 @@
 
                 // 发表评论
                 article_search.sub(comment_name, comment_input, function (res) {
-                    // console.log(res);
+                    console.log(res);
                     // console.log(456);
                     // 根据返回结果进行后续的处理
                     //（1） 清空留言区域
                     $('#comment_name').val('')
                     $('#comment_input').val('')
-                    console.log(comment_name, comment_input);
-                    // (2)
-                    // getmsg()
+                    // console.log(comment_name, comment_input);
+                    // (2)在请求一次
+                    $('#messages').empty()
+
+                    article_search.comment_li(function (res) {
+                        console.log(res);
+                        res.data = res.data.reverse()
+                        // 模板引擎渲染数据
+                        let strHtml = template('temp_commentlist', res)
+                        // 追加到页面
+                        $('#messages').append(strHtml)
+
+                    })
                 })
 
             }
         })
 
 
-        article_search.comment_li(function (res) {
-            
-            // 翻转数组获取最新评论:操作res属性值时需要重新赋值给这个属性
-            //  console.log(res.data.reverse());
-            res.data = res.data.reverse() 
-            console.log(res.data.reverse());
 
-
-
-            // 清除之前的留言内容
-
-            $('#messages').empty()
-            // 模板引擎渲染数据
-            let strHtml = template('temp_commentlist', res)
-            // console.log(strHtml);
-            // 追加到页面
-            $('#messages').append(strHtml)
-
-
-        })
 
 
     </script>
@@ -366,7 +353,7 @@
         let id = location.search.substr(4)
         //    alert(id)
         article_search.ar_detail(id, function (res) {
-            console.log(res);
+            // console.log(res);
             title = res.data.title;
             content = res.data.content;
             author = res.data.author;
@@ -379,7 +366,7 @@
             //  1. 先取出所有的类型数据
             //  2. 在其中找出编号与res.data.type相同的那一项，再取出它的名称
             index_search.category_show(function (result) {
-                console.log(result);
+                // console.log(result);
                 // 接下来，就是要在result.data这个数组中，找出哪一项它的id==res.data.type？
                 let rs = result.data.find(function (item) {
                     if (item.id == typeId) {
@@ -402,39 +389,40 @@
         })
 
     </script>
- <script src="./js/common.js"></script>
- <script>
- // 导航事件委托筛选
-// 下拉分类导航筛选
-$('.menu_le').on('click', 'a', function () {
-    type_txt = $(this).text();
-    console.log(type_txt);
-    // alert(`./list.html?type=${type_txt}`)
-    location.href = `./list.html?type=${type_txt}`
-    
-    // $('#ca').html(type_txt) 
-})
+    <script src="./js/common.js"></script>
+    <script>
+        // 导航事件委托筛选
+        // 下拉分类导航筛选
+        $('.menu_le').on('click', 'a', function () {
+            type_txt = $(this).text();
+            console.log(type_txt);
+            // alert(`./list.html?type=${type_txt}`)
+            location.href = `./list.html?type=${type_txt}`
 
-// 搜索框
-$('#btn').click( function () {
-    type_txt = $('#value').val();
-    console.log(type_txt);
-    // alert(`./list.html?type=${type_txt}`)
-    location.href = `./list.html?type=${type_txt}`
-    
-    // $('#ca').html(type_txt) 
-})
+            // $('#ca').html(type_txt) 
+        })
 
-// 上一页  下一页
-$('pre').click(function(){
-    console.log(123);
-    
-})
-$('next').click(function(){
-    console.log(456);
-    
-})
- </script>
+        // 搜索框
+        $('#btn').click(function () {
+            type_txt = $('#value').val();
+            console.log(type_txt);
+            // alert(`./list.html?type=${type_txt}`)
+            location.href = `./list.html?type=${type_txt}`
+
+            // $('#ca').html(type_txt) 
+        })
+
+        // 上一页  下一页
+        $('pre').click(function () {
+            console.log(123);
+
+        })
+        $('next').click(function () {
+            console.log(456);
+
+        })
+    </script>
+    <script src="./js/user.js"></script>
 </body>
 
 </html>

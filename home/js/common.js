@@ -35,7 +35,7 @@ index_search.latest_com(function (res) {
 
     // let strHtml = template('模板id',res)
     let htmlStr = template('temp_com', res)
-    console.log(htmlStr)
+    // console.log(htmlStr)
     $('#comment_list ').html(htmlStr)
 })
 
